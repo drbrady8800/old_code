@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<!--Metadata set up -->
+<head>
+<style>
+/*CSS*/
+
+
+
+/*Set up menu*/
+ul.topnav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+}
+
+ul.topnav li {float: left;}
+
+ul.topnav li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+ul.topnav li a:hover:not(.active) {background-color: #111;}
+
+ul.topnav li a.active {background-color: #4CAF50;}
+
+/*Animates the circles individually*/
+#circleHour {
+  fill: rgba(0,0,0,0);
+  stroke: blue;
+  stroke-linecap: round;
+  stroke-width: 10;
+  stroke-dashoffset: 500;
+  animation: rotate 3600s linear infinite;
+}
+#circleMinute {
+  fill: rgba(0,0,0,0);
+  position: absolute;
+  stroke: green;
+  stroke-linecap: round;
+  stroke-width: 10;
+  stroke-dashoffset: 500;
+  animation: rotate 60s linear infinite
+}
+#circleSecond {
+  fill: rgba(0,0,0,0);
+  position: absolute;
+  stroke: red;
+  stroke-linecap: round;
+  stroke-width: 10;
+  stroke-dashoffset: 500;
+  animation: rotate 1s linear infinite;
+}
+
+
+
+/*formats where the circles go on the screen*/
+.svg-container-hour {
+  position: absolute;
+  top: 200px;
+  right: 190px;
+  width: 100%;
+  height: 0px;
+}
+.svg-container-minute {
+  position: absolute;
+  top: 200px;
+  right: 0px;
+  width: 100%;
+  height: 0px;
+}
+.svg-container-second {
+  position: absolute;
+  top: 200px;
+  left: 190px;
+  width: 100%;
+  height: 0px;
+}
+
+
+/*formats the Title*/
+div.title {
+  position: absolute;
+  top: 10px;
+  width: 100%;
+  height: 0px;
+}
+
+
+/*formats how the numbers get put in the circles*/
+div.numbersHours {
+  position: absolute;
+  top: 150px;
+  right: 200px;
+  width: 100%;
+  height: 0px;
+}
+div.numbersMinutes {
+  position: absolute;
+  top: 150px;
+  right: 10px;
+  width: 100%;
+  height: 0px;
+}
+div.numbersSeconds {
+  position: absolute;
+  top: 150px;
+  left: 180px;
+  width: 100%;
+  height: 0px;
+}
+
+
+
+/*formats how the words get put in the circles*/
+div.wordHours {
+  position: absolute;
+  top: 300px;
+  right: 200px;
+  width: 100%;
+  height: 0px;
+}
+
+div.wordMinutes {
+  position: absolute;
+  top: 300px;
+  right: 10px;
+  width: 100%;
+  height: 0px;
+}
+
+div.wordSeconds {
+  position: absolute;
+  top: 300px;
+  left: 180px;
+  width: 100%;
+  height: 0px;
+}
+
+
+/*Tells what period it is*/
+div.period {
+  position: absolute;
+  top: 400px;
+  right: 10px;
+  width: 100%;
+  height: 0px;
+}
+
+
+
+/*Is a parent class that can move and adjust according to screen size*/
+#parent {
+  width:100%; height:500px; position:absolute; top:0px;
+}
+
+
+
+/*When the screen shrinks the menu expands and the circles go vertical*/
+@media screen and (max-width: 600px){
+    ul.topnav li {float: none;}
+    #parent {width:100%; height:500px; position:absolute; top:150px;}
+    
+    
+    /*Words formatted vertically*/
+    div.wordSeconds {position: absolute; top: 675px; left: 0px; width: 100%; height: 0px;}
+    div.wordMinutes {position: absolute; top: 475px; left: 0px; width: 100%; height: 0px;}
+    div.wordHours {position: absolute; top: 275px; left: 0px; width: 100%; height: 0px;}
+    
+    
+    /*Numbers formatted vertically*/
+    div.numbersSeconds {position: absolute; top: 525px; left: 0px; width: 100%; height: 0px;}
+    div.numbersMinutes {position: absolute; top: 325px; left: 0px; width: 100%; height: 0px;}
+    div.numbersHours {position: absolute; top: 125px; left: 0px; width: 100%; height: 0px;}
+    
+    
+    /*Circles formatted vertically*/
+    .svg-container-second {position: absolute; top: 575px; left: 8px; width: 100%; height: 0px;}
+    .svg-container-minute {position: absolute; top: 375px; left: 8px; width: 100%; height: 0px;}
+    .svg-container-hour {position: absolute; top: 175px; left: 8px; width: 100%; height: 0px;}
+    
+    
+    /*Period Number formatted vertically*/
+    div.period {position: absolute; top: 750px; left: 8px; width: 100%; height: 0px;
+}
+}
+
+
+/*this is the animation for how the clock rotates*/
+@keyframes rotate {
+  from {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes rotate2 {
+  from {
+    stroke-dashoffset: 0;
+  }
+}
+</style>
+  <title>Countdown till school's out</title>
+  <meta charset="UTF-8">
+</head>
+<!--HTML-->
+
+
+
+<!--Menu-->
+<ul class="topnav">
+  <li style="color: white; display: block; text-align: center; padding: 14px 16px;">Countdown until:</li>
+  <li><a href="file:///Users/declanbrady10619/Desktop/countdown.html">School Day Over</a></li>
+  <li><a class="active" href="file:///Users/declanbrady10619/Desktop/Period_countdown.html">Period Over</a></li>
+  <li><a href="#contact">School  Year Over</a></li>
+</ul>
+
+
+
+<!--Disables horzontal scrolling-->
+<body style="max-width: 100%; overflow-x: hidden;">
+
+
+
+<!--Creates a parent div that can change when screen shrinks-->
+
+
+
+<div id="parent">
+<!--Heading for the title-->
+<div class="title">
+    <h1 style="font-size:60px; text-align: center;">Countdown Clock</h1>
+</div>
+
+
+
+<!--puts the words inside the circles (formats it)-->
+<div class="wordHours">
+    <h2><pre style="font-family:times-new-roman; text-align:center;">   Hours</pre>
+    </h2>
+</div>
+
+<div class="wordMinutes" top="250">
+    <h2><pre style="font-family:times-new-roman; text-align:center;">   Minutes</pre>
+    </h2>
+</div>
+
+<div class="wordSeconds">
+    <h2><pre style="font-family:times-new-roman; text-align:center;">   Seconds</pre>
+    </h2>
+</div>
+
+
+
+<!--Puts the numbers inside the circles and assigns the the value given to them by the javascript-->
+<div class="numbersHours">
+    <b><pre style="font-size:80px; font-family:times-new-roman; text-align:center;" id="hours"></pre></b>
+</div>
+
+<div class="numbersMinutes" top="100">
+    <b><pre style="font-size:80px; font-family:times-new-roman; text-align:center;" id="minutes"></pre></b>
+</div>
+
+<div class="numbersSeconds">
+    <b><pre style="font-size:80px; font-family:times-new-roman; text-align:center;" id="seconds"></pre></b>
+</div>
+
+
+
+
+<!--Circles-->
+<div class="svg-container-hour" style="text-align:center;">
+  <svg height="200" width="200" id="SVGHour" stroke-dasharray="500">
+    <circle id="circleHour" cx="100" cy="100" r="80" transform="rotate(-90, 95, 95)"/>
+  </svg>
+</div>
+
+
+
+<div class="svg-container-minute" style="text-align:center;">
+  <svg height="200" width="200" id="SVGMinute" stroke-dasharray="500">
+    <circle id="circleMinute" cx="100" cy="100" r="80" transform="rotate(-90, 95, 95)"/>
+  </svg>
+</div>
+
+
+
+<div class="svg-container-second" style="text-align:center;">
+  <svg height="200" width="200" id="SVGSecond" stroke-dasharray="500">
+    <circle id="circleSecond" cx="100" cy="100" r="80" transform="rotate(-90, 95, 95)"/>
+  </svg>
+</div>
+
+
+<!--Text for what period it is-->
+<div class="period" style="text-align:center;">
+  <h1 style="font-size:60px; font-family:times-new-roman; text-align:center;" id="periodName"></h1>
+</div>
+</div>
+
+
+<!--Text for if there is school that day (outside of parent so it is shown when everything else isn't)-->
+<div style="position: absolute; top: 140px; width: 100%; height: 0px;">
+  <h1 style="font-size:60px; font-family:times-new-roman; text-align:center;" id="status"></h1>
+</div>
+
+
+
+<!--script-->
+<script>
+//runs methods
+updateClock();
+updateCircles();
+
+
+
+
+//updates the time left in school, refreshes every 10 milliseconds
+function updateClock() {
+
+
+//finds the current time
+var d = new Date();
+var month = d.getMonth() + 1;
+var year = d.getFullYear();
+var date = d.getDate();
+var DOW = d.getDay();
+var hour = d.getHours();
+var minute = d.getMinutes();
+var second = d.getSeconds();
+var millisecond = d.getMilliseconds();
+
+
+
+//time left in school
+var total = 15*3600 + 5*60 + 4;
+var totalLeft = (hour*3600 + minute*60 + second);
+if(DOW == 3 || DOW == 5) {
+  var totalLeftPeriod = getPeriod3(totalLeft);
+} else if(DOW == 2 || DOW == 4) {
+  var totalLeftPeriod = getPeriod2(totalLeft);
+} else {
+  var totalLeftPeriod = getPeriod1(totalLeft);
+}
+hoursLeft = (totalLeftPeriod/3600) | 0;
+minutesLeft = ((totalLeftPeriod % 3600)/60) | 0;
+secondsLeft = ((totalLeftPeriod % 3600)%60) | 0;
+
+
+//what to print
+if(DOW === 0 || DOW == 6) {
+var toPrint = "It’s a weekend, no school!";
+document.getElementById("status").innerHTML = toPrint;
+disappear();
+}
+else {
+if((hour == 15 && minute >= 5 && second >= 5) || (hour == 15 && minute >= 6) || hour >= 16) {
+var toPrint = "School is out for today!";
+document.getElementById("status").innerHTML = toPrint;
+disappear();
+}
+else {
+appear();
+var toPrintHours = String(" " + hoursLeft);
+var toPrintMinutes = String(" " + minutesLeft);
+var toPrintSeconds = String(" " + secondsLeft);
+document.getElementById("hours").innerHTML = toPrintHours;
+document.getElementById("minutes").innerHTML = toPrintMinutes;
+document.getElementById("seconds").innerHTML = toPrintSeconds;
+}
+}
+
+//prints it and updates it
+setTimeout(updateClock, 10);
+
+}
+
+
+
+function updateCircles() {
+var d = new Date();
+
+
+//current time
+var month = d.getMonth() + 1;
+var year = d.getFullYear();
+var date = d.getDate();
+var DOW = d.getDay();
+var hour = d.getHours();
+var minute = d.getMinutes();
+var second = d.getSeconds();
+var millisecond = d.getMilliseconds();
+
+
+
+//time left in school
+var total = 15*3600 + 5*60 + 4;
+var totalLeft = (hour*3600 + minute*60 + second);
+var millisecondsLeft = 999 - millisecond;
+if(DOW == 3 || DOW == 5) {
+  var totalLeftPeriod = getPeriod3(totalLeft);
+} else if(DOW == 2 || DOW == 4) {
+  var totalLeftPeriod = getPeriod2(totalLeft);
+} else {
+  var totalLeftPeriod = getPeriod1(totalLeft);
+}
+hoursLeft = (totalLeftPeriod/3600) | 0;
+minutesLeft = ((totalLeftPeriod % 3600)/60) | 0;
+secondsLeft = ((totalLeftPeriod % 3600)%60) | 0;
+
+
+
+
+
+//updatesCircle
+//how fast it will turn
+var secondTime = String(millisecondsLeft/1000 + "s");
+var minuteTime = String(secondsLeft + 1 + "s");
+var hourTime = String(minutesLeft*60 + secondsLeft + 1 + "s");
+
+//changes it to the above speeds and shortens the stroke
+document.getElementById("circleSecond").style.animation = "rotate " + secondTime + " linear 1";
+
+document.getElementById("circleMinute").style.animation = "rotate " + minuteTime + " linear 1";
+
+document.getElementById("circleHour").style.animation = "rotate " + hourTime + " linear 1";
+
+
+//resets the circles after they close
+setTimeout(normalizeSecond, millisecondsLeft);
+setTimeout(normalizeMinute, secondsLeft*1000 + millisecondsLeft);
+setTimeout(normalizeHour, minutesLeft*60000 + secondsLeft*1000 + millisecondsLeft);
+}
+
+function normalizeSecond() {
+    document.getElementById("circleSecond").style.animation = "rotate2 1s linear infinite";
+}
+
+function normalizeMinute() {
+    document.getElementById("circleMinute").style.animation = "rotate2 60s linear infinite";
+}
+
+function normalizeHour() {
+    document.getElementById("circleHour").style.animation = "rotate2 3600s linear infinite";
+}
+
+
+//shows and hides the UI
+function disappear() {
+  var x = document.getElementById("parent");
+      x.style.display = "none";
+}
+
+function appear() {
+  var x = document.getElementById("parent");
+      x.style.display = "block";
+}
+
+
+//gets the time the period is over on Mondays
+function getPeriod1(totalTime) {
+  if(totalTime <= 30904) {
+    document.getElementById("periodName").innerHTML = "Until School Starts";
+    return(30904 - totalTime);
+  } else if(totalTime <= 33604) {
+      document.getElementById("periodName").innerHTML = "First Period";
+      return(33604 - totalTime);
+    } else if(totalTime <= 33904) {
+      document.getElementById("periodName").innerHTML = "Passing Period";
+      return(33904 - totalTime);
+    } else if(totalTime <= 36604) {
+      document.getElementById("periodName").innerHTML = "Second Period";
+      return(36604 - totalTime);
+    } else if(totalTime <= 36904) {
+      document.getElementById("periodName").innerHTML = "Passing Period";
+      return(36904 - totalTime);
+    } else if(totalTime <= 39604) {
+      document.getElementById("periodName").innerHTML = "Third Period";
+      return(39604 - totalTime);
+    } else if(totalTime <= 40204) {
+      document.getElementById("periodName").innerHTML = "Brunch";
+      return(40204 - totalTime);
+    } else if(totalTime <= 40504) {
+      document.getElementById("periodName").innerHTML = "Passing Period";
+      return(40504 - totalTime);
+    } else if(totalTime <= 43204) {
+      document.getElementById("periodName").innerHTML = "Fourth Period";
+      return(43204 - totalTime);
+    } else if(totalTime <= 43504) {
+      document.getElementById("periodName").innerHTML = "Passing Period";
+      return(43504 - totalTime);
+    } else if(totalTime <= 46204) {
+      document.getElementById("periodName").innerHTML = "Fifth Period";
+      return(46204 - totalTime);
+    } else if(totalTime <= 48304) {
+      document.getElementById("periodName").innerHTML = "Lunch";
+      return(48304 - totalTime);
+    } else if(totalTime <= 48604) {
+      document.getElementById("periodName").innerHTML = "Passing Period";
+      return(48604 - totalTime);
+    } else if(totalTime <= 51304) {
+      document.getElementById("periodName").innerHTML = "Sixth Period";
+      return(51304 - totalTime);
+    } else if(totalTime <= 51604) {
+      document.getElementById("periodName").innerHTML = "Passing Period";
+      return(51604 - totalTime);
+    } else if(totalTime <= 54304) {
+      document.getElementById("periodName").innerHTML = "Seventh Period";
+      return(54304 - totalTime);
+    }
+}
+
+
+
+//gets the time the period is over on Tuesdays and Thursdays
+function getPeriod2(totalTime) {
+  if(totalTime <= 28804) {
+    document.getElementById("periodName").innerHTML = "Until School Starts";
+    return(28804 - totalTime);
+  } else if(totalTime <= 34204) {
+      document.getElementById("periodName").innerHTML = "First Period";
+      return(34204 - totalTime);
+    } else if(totalTime <= 34804) {
+      document.getElementById("periodName").innerHTML = "Passing Period";
+      return(34804 - totalTime);
+    } else if(totalTime <= 40204) {
+      document.getElementById("periodName").innerHTML = "Second Period";
+      return(40204 - totalTime);
+    } else if(totalTime <= 40504) {
+      document.getElementById("periodName").innerHTML = "Brunch";
+      return(40504 - totalTime);
+    } else if(totalTime <= 41104) {
+      document.getElementById("periodName").innerHTML = "Passing Period";
+      return(41104 - totalTime);
+    } else if(totalTime <= 46504) {
+      document.getElementById("periodName").innerHTML = "Third Period";
+      return(46504 - totalTime);
+    } else if(totalTime <= 48304) {
+      document.getElementById("periodName").innerHTML = "Lunch";
+      return(48304 - totalTime);
+    } else if(totalTime <= 48904) {
+      document.getElementById("periodName").innerHTML = "Passing Period";
+      return(48904 - totalTime);
+    } else if(totalTime <= 54304) {
+      document.getElementById("periodName").innerHTML = "Seventh Period";
+      return(54304 - totalTime);
+    }
+}
+
+
+
+//gets the time the period is over on Wendesdays and Fridays
+function getPeriod3(totalTime) {
+  if(totalTime <= 30904) {
+    document.getElementById("periodName").innerHTML = "Until School Starts";
+    return(30904 - totalTime);
+  } else if(totalTime <= 36304) {
+      document.getElementById("periodName").innerHTML = "Fourth Period";
+      return(36304 - totalTime);
+    } else if(totalTime <= 36904) {
+      document.getElementById("periodName").innerHTML = "Passing Period";
+      return(36904 - totalTime);
+    } else if(totalTime <= 40204) {
+      document.getElementById("periodName").innerHTML = "Academy";
+      return(40204 - totalTime);
+    } else if(totalTime <= 40504) {
+      document.getElementById("periodName").innerHTML = "Brunch";
+      return(40504 - totalTime);
+    } else if(totalTime <= 41104) {
+      document.getElementById("periodName").innerHTML = "Passing Period";
+      return(41104 - totalTime);
+    } else if(totalTime <= 46504) {
+      document.getElementById("periodName").innerHTML = "Fifth Period";
+      return(46504 - totalTime);
+    } else if(totalTime <= 48304) {
+      document.getElementById("periodName").innerHTML = "Lunch";
+      return(48304 - totalTime);
+    } else if(totalTime <= 48904) {
+      document.getElementById("periodName").innerHTML = "Passing Period";
+      return(48904 - totalTime);
+    } else if(totalTime <= 54304) {
+      document.getElementById("periodName").innerHTML = "Sixth Period";
+      return(54304 - totalTime);
+    }
+}
+
+</script>
+
+</body>
+</html>
