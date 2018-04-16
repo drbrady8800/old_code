@@ -18,13 +18,55 @@ input[id*=In] {
   color:#000;
   font-size: 20px;
 }
+
+select {
+  height:40px;
+  padding:5px 5px 5px 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  text-transform: none;
+  width: 150px;
+  background: #FFFFFF;
+  color:#000;
+  font-size: 20px;
+  border: 2px inset #EBE9ED;
+  
+  /* make arrow and background */
+
+  background:
+    linear-gradient(45deg, transparent 50%, black 50%),
+    linear-gradient(135deg, black 50%, transparent 50%),
+    linear-gradient(to right, white, white);
+  background-position:
+    calc(100% - 20px) calc(1em - 3px),
+    calc(100% - 13px) calc(1em - 3px),
+    100% 0;
+  background-size:
+    7px 7px,
+    7px 7px,
+    2.5em 2.5em;
+  background-repeat: no-repeat;
+
+  /* reset */
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-appearance:none;
+  -moz-appearance:none;
+  
+}
   
   
-  input[type=text]:focus{
+  input[id*=In]:focus{
   box-shadow:3px 3px 10px #446;
   outline:none;
 }
-    
+
+
+  select[id*=In]:focus{
+  box-shadow:3px 3px 10px #446;
+  outline:none;
+}
     
 </style>
   <!--Metadata set up -->
