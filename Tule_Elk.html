@@ -1,435 +1,110 @@
 <!DOCTYPE html>
 <html lang="en-US">
 
-<!--Metadata set up -->
+
 <head>
 <style>
 /*CSS*/
 
 
-
-/*Set up menu*/
-ul.topnav {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #333;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 100;
+input[id*=In] {
+  height:30px;
+  padding:5px 5px 5px 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  text-transform: none;
+  width: 100px;
+  background: #FFFFFF;
+  color:#000;
+  font-size: 20px;
 }
-
-ul.topnav li {float: left;}
-
-ul.topnav li a {
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
+  
+  
+  input[type=text]:focus{
+  box-shadow:3px 3px 10px #446;
+  outline:none;
 }
-
-ul.topnav li a:hover:not(.active) {background-color: #111;}
-
-ul.topnav li a.active {background-color: #4CAF50;}
-
-/*Animates the circles individually*/
-#circleHour {
-  fill: rgba(0,0,0,0);
-  stroke: blue;
-  stroke-linecap: round;
-  stroke-width: 10;
-  stroke-dashoffset: 500;
-  animation: rotate 3600s linear infinite;
-}
-#circleMinute {
-  fill: rgba(0,0,0,0);
-  position: absolute;
-  stroke: green;
-  stroke-linecap: round;
-  stroke-width: 10;
-  stroke-dashoffset: 500;
-  animation: rotate 60s linear infinite
-}
-#circleSecond {
-  fill: rgba(0,0,0,0);
-  position: absolute;
-  stroke: red;
-  stroke-linecap: round;
-  stroke-width: 10;
-  stroke-dashoffset: 500;
-  animation: rotate 1s linear infinite;
-}
-
-
-
-/*formats where the circles go on the screen*/
-.svg-container-hour {
-  position: absolute;
-  top: 200px;
-  right: 190px;
-  width: 100%;
-  height: 0px;
-}
-.svg-container-minute {
-  position: absolute;
-  top: 200px;
-  right: 0px;
-  width: 100%;
-  height: 0px;
-}
-.svg-container-second {
-  position: absolute;
-  top: 200px;
-  left: 190px;
-  width: 100%;
-  height: 0px;
-}
-
-
-/*formats the Title*/
-div.title {
-  position: absolute;
-  top: 10px;
-  width: 100%;
-  height: 0px;
-}
-
-
-/*formats how the numbers get put in the circles*/
-div.numbersHours {
-  position: absolute;
-  top: 150px;
-  right: 200px;
-  width: 100%;
-  height: 0px;
-}
-div.numbersMinutes {
-  position: absolute;
-  top: 150px;
-  right: 10px;
-  width: 100%;
-  height: 0px;
-}
-div.numbersSeconds {
-  position: absolute;
-  top: 150px;
-  left: 180px;
-  width: 100%;
-  height: 0px;
-}
-
-
-
-/*formats how the words get put in the circles*/
-div.wordHours {
-  position: absolute;
-  top: 300px;
-  right: 200px;
-  width: 100%;
-  height: 0px;
-}
-
-div.wordMinutes {
-  position: absolute;
-  top: 300px;
-  right: 10px;
-  width: 100%;
-  height: 0px;
-}
-
-div.wordSeconds {
-  position: absolute;
-  top: 300px;
-  left: 180px;
-  width: 100%;
-  height: 0px;
-}
-
-
-
-#parent {
-  width:100%; height:500px; position:absolute; top:0px;
-}
-
-
-
-/*When the screen shrinks the menu expands and the circles go vertical*/
-@media screen and (max-width: 600px){
-    ul.topnav li {float: none;}
-    #parent {width:100%; height:500px; position:absolute; top:150px;}
     
     
-    /*Words formatted vertically*/
-    div.wordSeconds {position: absolute; top: 675px; left: 0px; width: 100%; height: 0px;}
-    div.wordMinutes {position: absolute; top: 475px; left: 0px; width: 100%; height: 0px;}
-    div.wordHours {position: absolute; top: 275px; left: 0px; width: 100%; height: 0px;}
-    
-    
-    /*Numbers formatted vertically*/
-    div.numbersSeconds {position: absolute; top: 525px; left: 0px; width: 100%; height: 0px;}
-    div.numbersMinutes {position: absolute; top: 325px; left: 0px; width: 100%; height: 0px;}
-    div.numbersHours {position: absolute; top: 125px; left: 0px; width: 100%; height: 0px;}
-    
-    
-    /*Circles formatted vertically*/
-    .svg-container-second {position: absolute; top: 575px; left: 8px; width: 100%; height: 0px;}
-    .svg-container-minute {position: absolute; top: 375px; left: 8px; width: 100%; height: 0px;}
-    .svg-container-hour {position: absolute; top: 175px; left: 8px; width: 100%; height: 0px;}
-}
-
-
-/*this is the animation for how the clock rotates*/
-@keyframes rotate {
-  from {
-    stroke-dashoffset: 0;
-  }
-}
-
-@keyframes rotate2 {
-  from {
-    stroke-dashoffset: 0;
-  }
-}
 </style>
-  <title>Countdown till school's out</title>
+  <!--Metadata set up -->
+  <title>Tule Elk Simulation</title>
   <meta charset="UTF-8">
 </head>
+
 <!--HTML-->
 
 
+<!--Heading-->
+<h1>Tule Elk Simulation</h1>
 
-<!--Menu-->
-<ul class="topnav">
-  <li style="color: white; display: block; text-align: center; padding: 14px 16px;">Countdown until:</li>
-  <li><a class="active" href="file:///Users/declanbrady10619/Desktop/countdown.html">School Day Over</a></li>
-  <li><a href="file:///Users/declanbrady10619/Desktop/Period_countdown.html">Period Over</a></li>
-  <li><a href="#contact">School Year Over</a></li>
-</ul>
-
-
-
-<!--Disables horzontal scrolling-->
-<body style="max-width: 100%; overflow-x: hidden;">
-
-
-
-<!--Creates a parent div that can change when screen shrinks-->
-
-
-
-<div id="parent">
-<!--Heading for the title-->
-<div class="title">
-    <h1 style="font-size:60px; text-align: center;">Countdown Clock</h1>
-</div>
-
-
-
-<!--puts the words inside the circles (formats it)-->
-<div class="wordHours">
-    <h2><pre style="font-family:times-new-roman; text-align:center;">   Hours</pre>
-    </h2>
-</div>
-
-<div class="wordMinutes" top="250">
-    <h2><pre style="font-family:times-new-roman; text-align:center;">   Minutes</pre>
-    </h2>
-</div>
-
-<div class="wordSeconds">
-    <h2><pre style="font-family:times-new-roman; text-align:center;">   Seconds</pre>
-    </h2>
-</div>
+<!--Inputs-->
+<form id="frm1" action="/action_page.php"  onsubmit="return validateForm()">
+  Generations to Simulate: <input type="number" id="yearIn" value="100" min="50" max="500" step="10"><br>
+  Likelyhood of Environment Change: <input type="number" id="percentIn" value="50" min="1" max="100" step="1">%<br>
+  Migration Rates Between Herds: <input type="number" id="migrationIn" value="0" min="1" max="100" step="1"><br>
+  Chance of New Herd: <input type="number" id="migrationIn" value="0" min="1" max="10" step="1">%<br>
+  Allele to Simulate: <select id="allelesIn">
+    <option value="BL42">BL42</option>
+    <option value="BM6505">BM6505</option>
+    <option value="BM415">BM415</option>
+    <option value="RM006">RM006</option>
+    <option value="BM5004">BM5004</option>
+    <option value="BM4107">BM4107</option>
+    <option value="FCB193">FCB193</option>
+    <option value="BM888">BM888</option>
+    <option value="BM1009">BM1009</option>
+    <option value="MAF109">MAF109</option>
+    <option value="BOVIRBP">BOVIRBP</option>
+    <option value="JP15">JP15</option>
+  </select><br>
+  <input type="submit" value="Submit" onclick="copyText()">
+</form> 
 
 
+<p id="demo"></p>
 
-<!--Puts the numbers inside the circles and assigns the the value given to them by the javascript-->
-<div class="numbersHours">
-    <b><pre style="font-size:80px; font-family:times-new-roman; text-align:center;" id="hours"></pre></b>
-</div>
-
-<div class="numbersMinutes" top="100">
-    <b><pre style="font-size:80px; font-family:times-new-roman; text-align:center;" id="minutes"></pre></b>
-</div>
-
-<div class="numbersSeconds">
-    <b><pre style="font-size:80px; font-family:times-new-roman; text-align:center;" id="seconds"></pre></b>
-</div>
-
-
-
-
-<!--Circles-->
-<div class="svg-container-hour" style="text-align:center;">
-  <svg height="200" width="200" id="SVGHour" stroke-dasharray="500">
-    <circle id="circleHour" cx="100" cy="100" r="80" transform="rotate(-90, 95, 95)"/>
-  </svg>
-</div>
-
-
-
-<div class="svg-container-minute" style="text-align:center;">
-  <svg height="200" width="200" id="SVGMinute" stroke-dasharray="500">
-    <circle id="circleMinute" cx="100" cy="100" r="80" transform="rotate(-90, 95, 95)"/>
-  </svg>
-</div>
-
-
-
-<div class="svg-container-second" style="text-align:center;">
-  <svg height="200" width="200" id="SVGSecond" stroke-dasharray="500">
-    <circle id="circleSecond" cx="100" cy="100" r="80" transform="rotate(-90, 95, 95)"/>
-  </svg>
-</div>
-</div>
-
-
-<!--Text for if there is school that day (outside of parent so it is shown when everything else isn't-->
-<div style="position: absolute; top: 140px; width: 100%; height: 0px;">
-  <b><pre style="font-size:60px; font-family:times-new-roman; text-align:center;" id="status"></pre></b>
-</div>
-
-
-
-<!--script-->
 <script>
-//runs methods
-updateClock();
-updateCircles();
+//at first, we define a variable stating that an event listener has been attached onto the field
+var validatePhoneOnKeyUpAttached = false;
 
-
-
-
-//updates the time left in school, refreshes every 10 milliseconds
-function updateClock() {
-
-
-//finds the current time
-var d = new Date();
-var month = d.getMonth() + 1;
-var year = d.getFullYear();
-var date = d.getDate();
-var DOW = d.getDay();
-var hour = d.getHours();
-var minute = d.getMinutes();
-var second = d.getSeconds();
-var millisecond = d.getMilliseconds();
-
-
-
-//time left in school
-var total = 15*3600 + 5*60 + 4;
-var totalLeft = total - (hour*3600 + minute*60 + second);
-hoursLeft = (totalLeft / 3600) | 0;
-minutesLeft = ((totalLeft % 3600)/60) | 0;
-secondsLeft = ((totalLeft % 3600)%60) | 0;
-
-
-//what to print
-if(DOW === 0 || DOW == 6) {
-var toPrint = "It’s a weekend, no school!";
-document.getElementById("status").innerHTML = toPrint;
-disappear();
-}
-else {
-if((hour == 15 && minute >= 5 && second >= 5) || (hour == 15 && minute >= 6) || hour >= 16) {
-var toPrint = "School is out for today!";
-document.getElementById("status").innerHTML = toPrint;
-disappear();
-}
-else {
-appear();
-var toPrintHours = String(" " + hoursLeft);
-var toPrintMinutes = String(" " + minutesLeft);
-var toPrintSeconds = String(" " + secondsLeft);
-document.getElementById("hours").innerHTML = toPrintHours;
-document.getElementById("minutes").innerHTML = toPrintMinutes;
-document.getElementById("seconds").innerHTML = toPrintSeconds;
-}
-}
-
-//prints it and updates it
-setTimeout(updateClock, 10);
-
+function validateForm() {
+//then, we attach the event listened to the field after the submit, if it has not been done so far
+  if(!validatePhoneOnKeyUpAttached) {
+   document.getElementById("fname").onkeyup = checkPhone;
+   validatePhoneOnKeyUpAttached = true;
+  }
+  return checkPhone();
 }
 
 
 
-function updateCircles() {
-var d = new Date();
 
+function checkPhone() {
+  var phone = document.forms["frm1"]["fname"].value;
+  var phoneNum = phone.replace(/[^\d]/g, '');
+  if(phoneNum.length > 6 && phoneNum.length < 11) {
+    document.getElementById("fname").style.border="2px inset #EBE9ED";
+    document.getElementById("fname").style.padding="5px 5px 5px 10px";
+    return true;
+  } 
+  else if(phoneNum.length < 7 || phoneNum.length > 10) {
+    document.getElementById("fname").style.border="4px inset red";
+    document.getElementById("fname").style.padding="3px 3px 3px 8px";
+    return false;
 
-//current time
-var month = d.getMonth() + 1;
-var year = d.getFullYear();
-var date = d.getDate();
-var DOW = d.getDay();
-var hour = d.getHours();
-var minute = d.getMinutes();
-var second = d.getSeconds();
-var millisecond = d.getMilliseconds();
-
-
-
-//time left in school
-var total = 15*3600 + 5*60 + 4;
-var totalLeft = total - (hour*3600 + minute*60 + second);
-var millisecondsLeft = 999 - millisecond;
-hoursLeft = (totalLeft / 3600) | 0;
-minutesLeft = ((totalLeft % 3600)/60) | 0;
-secondsLeft = ((totalLeft % 3600)%60) | 0;
-
-
-
-//updatesCircle
-//how fast it will turn
-var secondTime = String(millisecondsLeft/1000 + "s");
-var minuteTime = String(secondsLeft + 1 + "s");
-var hourTime = String(minutesLeft*60 + secondsLeft + "s");
-
-//changes it to the above speeds and shortens the stroke
-document.getElementById("circleSecond").style.animation = "rotate " + secondTime + " linear 1";
-
-document.getElementById("circleMinute").style.animation = "rotate " + minuteTime + " linear 1";
-
-document.getElementById("circleHour").style.animation = "rotate " + hourTime + " linear 1";
-
-
-//resets the circles after they close
-setTimeout(normalizeSecond, millisecondsLeft);
-setTimeout(normalizeMinute, secondsLeft*1000 + millisecondsLeft);
-setTimeout(normalizeHour, minutesLeft*60000 + secondsLeft*1000 + millisecondsLeft);
-}
-
-function normalizeSecond() {
-    document.getElementById("circleSecond").style.animation = "rotate2 1s linear infinite";
-}
-
-function normalizeMinute() {
-    document.getElementById("circleMinute").style.animation = "rotate2 60s linear infinite";
-}
-
-function normalizeHour() {
-    document.getElementById("circleHour").style.animation = "rotate2 3600s linear infinite";
+  }
 }
 
 
-//shows and hides the UI
-function disappear() {
-  var x = document.getElementById("parent");
-      x.style.display = "none";
-}
 
-function appear() {
-  var x = document.getElementById("parent");
-      x.style.display = "block";
+function copyText() {
+    var x = document.getElementById("frm1");
+    var text = "";
+    var i;
+    for (i = 0; i < x.length ;i++) {
+        text += x.elements[i].value + "<br>";
+    }
+    document.getElementById("demo").innerHTML = text;
 }
-
 </script>
-
-</body>
-</html>
