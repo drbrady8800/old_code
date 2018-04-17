@@ -82,12 +82,12 @@ select {
 
 <!--Inputs-->
 <form id="frm1" onkeyup="return checkCorrect()">
-  <abbr title="How many generations will be simulated">Generations to Simulate:</abbr><input type="number" id="yearIn" value="100" min="50" max="500" step="10" ><br>
-  Likelyhood of Environment Change: <input type="number" id="percentIn" value="50" min="1" max="100" step="1">%<br>
-  Migration Rates Between Herds: <input type="number" id="migrationIn" value="0" min="0" max="100" step="1">%<br>
-  Chance of New Herds: <input type="number" id="herdsIn" value="0" min="0" max="10" step="1">%<br>
-  Mutation Rate: <input type="number" id="mutationIn" value="0" min="0" max="10" step="1">%<br>
-  Allele to Simulate: <select id="allelesIn">
+  <abbr title="How many generations will be simulated">Generations to Simulate: </abbr><input type="number" id="yearIn" value="100" min="50" max="500" step="10" ><br>
+  <abbr title="The percent chance that enviroment will change and make certain alleles more evolutionarily helpful">Likelyhood of Environment Change: </abbr><input type="number" id="percentIn" value="50" min="1" max="100" step="1">%<br>
+  <abbr title="The percent chance that individuals will cross breed with other herds">Migration Rates Between Herds: </abbr><input type="number" id="migrationIn" value="0" min="0" max="100" step="1">%<br>
+  <abbr title="The percent chance of a new herd forming per generation">Chance of New Herds: </abbr><input type="number" id="herdsIn" value="0" min="0" max="10" step="1">%<br>
+  <abbr title="Likelyhood that alleles will mutate">Mutation Rate: </abbr><input type="number" id="mutationIn" value="0" min="0" max="10" step="1">%<br>
+  <abbr title="Which allele will be simulated">Allele to Simulate: </abbr><select id="allelesIn">
     <option value="BL42">BL42</option>
     <option value="BM6505">BM6505</option>
     <option value="BM415">BM415</option>
