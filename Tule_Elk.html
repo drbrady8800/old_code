@@ -81,11 +81,12 @@ select {
 <h1>Tule Elk Simulation</h1>
 
 <!--Inputs-->
-<form id="frm1" action="/action_page.php"  onsubmit="return validateForm()">
-  Generations to Simulate: <input type="number" id="yearIn" value="100" min="50" max="500" step="10"><br>
+<form id="frm1" action="/action_page.php" onkeyup="return checkCorrect()">
+  Generations to Simulate: <input type="number" id="yearIn" value="100" min="50" max="500" step="10" ><br>
   Likelyhood of Environment Change: <input type="number" id="percentIn" value="50" min="1" max="100" step="1">%<br>
-  Migration Rates Between Herds: <input type="number" id="migrationIn" value="0" min="1" max="100" step="1"><br>
-  Chance of New Herd: <input type="number" id="migrationIn" value="0" min="1" max="10" step="1">%<br>
+  Migration Rates Between Herds: <input type="number" id="migrationIn" value="0" min="0" max="100" step="1">%<br>
+  Chance of New Herds: <input type="number" id="herdsIn" value="0" min="0" max="10" step="1">%<br>
+  Mutation Rate: <input type="number" id="mutationIn" value="0" min="0" max="10" step="1">%<br>
   Allele to Simulate: <select id="allelesIn">
     <option value="BL42">BL42</option>
     <option value="BM6505">BM6505</option>
@@ -108,33 +109,27 @@ select {
 
 <script>
 //at first, we define a variable stating that an event listener has been attached onto the field
-var validatePhoneOnKeyUpAttached = false;
-
-function validateForm() {
-//then, we attach the event listened to the field after the submit, if it has not been done so far
-  if(!validatePhoneOnKeyUpAttached) {
-   document.getElementById("fname").onkeyup = checkPhone;
-   validatePhoneOnKeyUpAttached = true;
-  }
-  return checkPhone();
-}
+var validate = false;
+//id names
+var ids = ["yearIn", "percentIn", "migrationIn", "herdsIn", "mutationIn"];
+//id mins and maxes
+var idMins = [50, 1, 0, 0, 0];
+var idMaxes =[500, 100, 100, 10, 10];
 
 
 
-
-function checkPhone() {
-  var phone = document.forms["frm1"]["fname"].value;
-  var phoneNum = phone.replace(/[^\d]/g, '');
-  if(phoneNum.length > 6 && phoneNum.length < 11) {
-    document.getElementById("fname").style.border="2px inset #EBE9ED";
-    document.getElementById("fname").style.padding="5px 5px 5px 10px";
-    return true;
-  } 
-  else if(phoneNum.length < 7 || phoneNum.length > 10) {
-    document.getElementById("fname").style.border="4px inset red";
-    document.getElementById("fname").style.padding="3px 3px 3px 8px";
-    return false;
-
+function checkCorrect() {
+  for(var i = 0; i < ids.length; i++) {
+    var textInBox = document.forms["frm1"][ids[i]].value;
+    var value = textInBox.replace(/[^\d]/g, '');
+    if(value <= idMaxes[i] && value >= idMins[i]) {
+      document.getElementById(ids[i]).style.border="2px inset #EBE9ED";
+      document.getElementById(ids[i]).style.padding="5px 5px 5px 10px";
+    } 
+    else {
+      document.getElementById(ids[i]).style.border="4px inset red";
+      document.getElementById(ids[i]).style.padding="3px 3px 3px 8px";
+    }
   }
 }
 
