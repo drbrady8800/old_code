@@ -71,6 +71,7 @@ select[id*=In]:focus{
    
 abbr {
   font-size: 20px;
+  font-family: arial;
   border-radius: 100px;
   border: 1px solid blue;
   cursor: help;
@@ -84,10 +85,11 @@ abbr:hover {
   cursor: help;
   text-decoration: none !important;
   color: grey;
+  
 }
 
 pre {
-  font-family: arial;
+  font-family: times new roman;
   font-size: 20px;
 }
 
@@ -102,6 +104,7 @@ pre {
 
 <!--Heading-->
 <h1>Tule Elk Simulation</h1>
+<p>Hover over question marks for more information</p><br>
 
 <!--Inputs-->
 <form id="frm1" onkeyup="return checkCorrect()">
@@ -160,6 +163,7 @@ function checkCorrect() {
     }
   }
 }
+
 
 
 function copyText() {
