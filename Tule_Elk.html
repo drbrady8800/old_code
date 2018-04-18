@@ -120,6 +120,12 @@ pre {
 
 <!--Heading-->
 <h1>Tule Elk Simulation</h1>
+
+
+<!--Creates a div that hides when button is pressed-->
+<div id="inputs">
+
+
 <p>Hover over question marks for more information</p><br>
 
 <!--Inputs-->
@@ -145,12 +151,24 @@ pre {
   </select> <abbr title="Which allele will be simulated"> ? </abbr></pre>
 </form> 
 
-<!--Abrreviations-->
+
+
+<button onClick="hideInput()">Submit</button>
 
 
 
+</div>
 
-<button onClick="copyText()">Submit</button>
+
+
+<!--Creates a div of reset button and graph-->
+<div id="results" style="display: none;">
+  <button onClick="showInput()">Reset</button>
+
+
+</div>
+
+
 
 <p id="demo"></p>
 
@@ -181,14 +199,15 @@ function checkCorrect() {
 }
 
 
+//hides and show results/inputs
+function hideInput() {
+  document.getElementById("inputs").style.display = "none";
+  document.getElementById("results").style.display = "block";
+}
 
-function copyText() {
-    var x = document.getElementById("frm1");
-    var text = "";
-    var i;
-    for (i = 0; i < x.length ;i++) {
-        text += x.elements[i].value + "<br>";
-    }
-    document.getElementById("demo").innerHTML = text;
+
+function showInput() {
+  document.getElementById("inputs").style.display = "block";
+  document.getElementById("results").style.display = "none";
 }
 </script>
