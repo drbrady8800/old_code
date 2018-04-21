@@ -165,11 +165,17 @@ div.error {
   margin: 0 auto;
   top: 0px;
   left: 0px;
-  width: 500px; 
-  height: 370px;
+  width: 80%; 
+  height: 70%;
   border: 2px solid #d3d3d3;
   background: rgba(180, 180, 180, 0.5);
   display: none;
+}
+canvas[id=myChart] {
+  poistion: absolute;
+  top: 0px;
+  left: 0px;
+  height: 10%;
 }
 body {
     background: url("http://www.whimsandfancies.com/wp-content/gallery/point_reyes/tule_elk_clsup.jpg") no-repeat center fixed; 
@@ -265,6 +271,7 @@ body {
 <div id="results">
   <canvas id="myChart"></canvas>
   <button onClick="showInput()">Reset</button>
+  <button onClick="simAllGen()">Run Again</button>
 </div>
 
 
