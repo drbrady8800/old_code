@@ -132,8 +132,7 @@ pre {
 <form id="frm1" onkeyup="return checkCorrect()">
   <pre>Generations to Simulate: <input type="number" id="yearIn" value="100" min="50" max="500" step="10"> <abbr title="How many generations will be simulated"> ? </abbr></pre>
   <pre>Likelihood of Environment Change: <input type="number" id="percentIn" value="50" min="1" max="100" step="1"> <abbr title="The percent chance that enviroment will change and make certain alleles more evolutionarily helpful"> ? </abbr></pre>
-  <pre>Migration Rates Between Herds: <input type="number" id="migrationIn" value="0" min="0" max="100" step="1"> <abbr title="The percent chance that individuals will cross breed with other herds"> ? </abbr></pre>
-  <pre>Chance of New Herd Development: <input type="number" id="herdsIn" value="0" min="0" max="10" step="1"> <abbr title="The percent chance of a new herd forming per generation"> ? </abbr></pre>
+  <pre>Migration Rate: <input type="number" id="migrationIn" value="0" min="0" max="10" step="1"> <abbr title="How much migration in and out of the herd"> ? </abbr></pre>
   <pre>Mutation Rate: <input type="number" id="mutationIn" value="0" min="0" max="10" step="1"> <abbr title="Likelyhood that alleles will mutate"> ? </abbr></pre>
   <pre>Allele to Simulate: <select id="allelesIn">
     <option value="BL42">BL42</option>
@@ -153,7 +152,7 @@ pre {
 
 
 
-<button onClick="hideInput()">Submit</button>
+<button onClick="simAllGen()">Submit</button>
 
 
 
@@ -164,15 +163,271 @@ pre {
 <!--Creates a div of reset button and graph-->
 <div id="results" style="display: none;">
   <button onClick="showInput()">Reset</button>
-
+  <p id="demo">g</p>
 
 </div>
 
 
 
-<p id="demo"></p>
+
 
 <script>
+//creates all values of alleles as dictionaries
+var BL42 = {name: "BL42", numAlleles: 2, alleleA: 1, alleleB: 2};
+var BM6505 = {name: "BM6505", numAlleles: 1, alleleA: 1};
+var RM006 = {name: "RM006", numAlleles: 1, alleleA: 1};
+var BM5004 = {name: "BM5004", numAlleles: 2, alleleA: 1, alleleB: 2};
+var BM4017 = {name: "BM4017", numAlleles: 1, alleleA: 1};
+var BM888 = {name: "BM888", numAlleles: 2, alleleA: 0.694, alleleB: 0.306};
+var BM1009 = {name: "BM1009", numAlleles: 1, alleleA: 1};
+var MAF109 = {name: "MAF109", numAlleles: 2, alleleA: 1, alleleB: 2};
+var JP15 = {name: "JP15", numAlleles: 1, alleleA: 1};
+
+//creates an array of all dictionaries
+var alleles = [BL42, BM6505, RM006, BM5004, BM4017, BM888, BM1009, MAF109, JP15];
+
+
+var pop = 440;
+var popPoints = [440];
+
+
+//input variable
+var gens = 50;
+var envirChange = 100;
+var migration = 10;
+var mutation = 10;
+var allele = "BM888";
+var alleleToSim = findAllele();
+
+//fitness of the alleles
+var fit1 = 1;
+var fit2 = 1;
+var popAA = 0;
+var popAa = 0;
+var popaa = 0;
+var popAAOriginal = 0;
+var popAaOriginal = 0;
+var popaaOriginal = 0;
+var AACap;
+var AaCap;
+var aaCap;
+
+
+function simAllGen() {
+  hideInput();
+  for(var i = 0; i < gens; i++) {
+    changeFit();
+    createIndividuals();
+    calcOffspring();
+    calcPop();
+  }
+  document.getElementById('demo').innerHTML = popPoints;
+}
+
+
+//calculates the total pop for each allele based on fitness
+function calcPop() {
+  //calculates the new pops based on fitness
+  
+  popAA = Math.max(0, Math.floor((popAA * fit1)-popAAOriginal));
+  popAa = Math.max(0, Math.floor((popAa * fit1)-popAaOriginal));
+  popaa = Math.max(0, Math.floor((popaa * fit2)-popaaOriginal));
+  
+  //creates a cap on the population (equilibirum)
+  if(pop > 0) {
+    AACap = Math.floor(600*(popAA/pop));
+    AaCap = Math.floor(600*(popAa/pop));
+    aaCap = Math.floor(600*(popaa/pop));
+  } else {
+    AACap = 0;
+    AaCap = 0;
+    aaCap = 0;
+  }
+  
+  
+  
+  //creates new pops based on the cap
+  popAA = Math.min(AACap, popAA);
+  popAa = Math.min(AaCap, popAa);
+  popaa = Math.min(aaCap, popaa);
+  
+  
+  
+  
+  //calculates total pop
+  pop = (popAA + popAa + popaa);
+  popPoints.push(pop);
+  
+  
+  
+  //calculates the new frequencies
+  if(pop > 0) {
+    alleleToSim.alleleA = ((popAA *2.0) + popAa) / (pop*2);
+	  alleleToSim.alleleB = 1 - alleleToSim.alleleA;
+  } else {
+    alleleToSim.alleleA = 0;
+    alleleToSim.alleleB = 0;
+  }
+}
+
+
+
+
+//does hardey-wineberg to calculate new population numbers
+function calcOffspring() {
+  //assumes 80% of the generation mates and each pair makes 3 children
+  var popAAMates = Math.floor((popAA*2.4) - (popAA*2.4)%2);
+  var popAaMates = Math.floor((popAa*2.4) - (popAa*2.4)%2);
+  var popaaMates = Math.floor((popaa*2.4) - (popaa*2.4)%2);
+  for(var i = 0; i < (pop*1.2 - ((pop*1.2)%2) - 3); i++) { //make sure there are an even number of mates
+  
+    //assigns the two mates to an allele type
+    var mate1 = Math.floor(Math.random()*3);
+    var mate2 = Math.floor(Math.random()*3);
+    while((mate1 === 0 && popAAMates <= 0) || (mate1 == 1 && popAaMates <= 0) || (mate1 == 2 && popaaMates <= 0)) {
+      mate1 = Math.floor(Math.random()*3);
+    }
+    if(mate1 === 0) {
+      popAAMates--;
+    } else if (mate1 == 1) {
+      popAaMates--;
+    } else {
+      popaaMates--;
+    }
+    while((mate2 === 0 && popAAMates <= 0) || (mate2 == 1 && popAaMates <= 0) || (mate2 == 2 && popaaMates <= 0)) {
+      mate2 = Math.floor(Math.random()*3);
+    }
+    if(mate2 === 0) {
+      popAAMates--;
+    } else if (mate2 == 1) {
+      popAaMates--;
+    } else {
+      popaaMates--;
+    }
+    
+    
+    
+    //calculate allele type
+    if(mate1 === 0 && mate2 === 0) {
+      popAA++;
+    }
+    if((mate1 === 0 && mate2 == 1) || (mate1 == 1 && mate2 === 0)) {
+      var which = Math.round(Math.random()*4);
+      if(which <=2) {
+        popAA++;
+      } else {
+        popAa++;
+      }
+    }
+    if((mate1 === 0 && mate2 == 2) || (mate1 == 2 && mate2 === 0)) {
+      popAa++;
+    }
+    if(mate1 == 1 && mate2 == 1) {
+      var which = Math.round(Math.random()*4);
+      if(which===0) {
+        popAA++;
+      } else if(which==3) {
+        popaa++;
+      } else {
+        popAa++;
+      }
+    }
+    if((mate1 == 1 && mate2 == 2) || (mate1 == 2 && mate2 == 1)) {
+      var which = Math.round(Math.random()*2);
+      if(which===0) {
+        popAa++;
+      } else {
+        popaa++;
+      }
+    }
+    if(mate1 == 2 && mate2 == 2) {
+      popaa++;
+    }
+  }
+}
+
+
+
+//changes the fitness of genes based on random environmental changes
+function changeFit() {
+  if(envirChange/100 > Math.random()) {
+    var which = Math.floor(Math.random()*2);
+    var up = Math.floor(Math.random()*2);
+    if(which === 0) {
+      if(up === 0) {
+        fit1 = Math.max(0, fit1 - (Math.random()/5));
+      } else {
+        fit1 = Math.min(1, fit1 + (Math.random()/5));
+      }
+    } else {
+      if(up === 0) {
+        fit2 = Math.max(0, fit2 - (Math.random()/5));
+      } else {
+        fit2 = Math.min(1, fit2 + (Math.random()/5));
+      }
+    }
+  }
+}
+
+
+
+//finds which gene the user wants to simulate
+function findAllele() {
+  for(var i = 0; i < alleles.length; i++) {
+    if(alleles[i].name == allele) {
+      if(alleles[i].name == "BM6505" || alleles[i].name == "JP15" || alleles[i].name == "BM1009" || alleles[i].name == "BM4017" || alleles[i].name == "RM006") {
+        migration = 0;
+      }
+      return(alleles[i]);
+    }
+  }
+}
+
+
+
+//creates and array of individuals
+function createIndividuals() {
+  var p = alleleToSim.alleleA;
+  var q;
+  if(alleleToSim.numAlleles > 1) {
+    q = alleleToSim.alleleB;
+  } else {
+    q = 0;
+  }
+  //migraition
+  p = p * (1.0 - (migration/100)) + (migration/100);
+  
+  
+  
+  //mutation rate
+  if(alleleToSim.numAlleles > 1) {
+    p = (1 - (mutation/100)) * p + (mutation/100) * (1 - p);
+  }
+  
+  
+  //assigns the number of pops for each allele
+	popAA = Math.round((p * p) * pop); //get number of AA
+  popAa = Math.round((2.0 * p * q) * pop); //get number of Aa
+  popaa = Math.round((q * q) * pop); //get number of aa
+  
+  
+  //assings the same value as above but for later use
+  popAAOriginal = popAA;
+  popAaOriginal = popAa;
+  popaaOriginal = popaa;
+  
+  
+  //gives population size
+  pop = popAA + popAa + popaa;
+}
+
+
+
+
+
+
+
+
 //at first, we define a variable stating that an event listener has been attached onto the field
 var validate = false;
 //id names
@@ -209,5 +464,20 @@ function hideInput() {
 function showInput() {
   document.getElementById("inputs").style.display = "block";
   document.getElementById("results").style.display = "none";
+  
+  //reset all variables
+  pop = 440;
+  popPoints = [440];
+  fit1 = 1;
+  fit2 = 1;
+  popAA = 0;
+  popAa = 0;
+  popaa = 0;
+  popAAOriginal = 0;
+  popAaOriginal = 0;
+  popaaOriginal = 0;
+  AACap = 0;
+  AaCap = 0;
+  aaCap = 0;
 }
 </script>
