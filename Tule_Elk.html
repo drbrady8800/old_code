@@ -8,38 +8,40 @@
 
 
 input[id*=In] {
-  height:30px;
-  padding:5px 5px 5px 10px;
+  height:29px;
+  padding:5px 5px 0px 0px;
   margin-bottom: 10px;
-  border-radius: 10px;
   text-transform: none;
   width: 100px;
   background: #FFFFFF;
-  color: #000;
+  color: #d3d3d3;
   font-size: 20px;
+  border: none;
+  border-bottom: 2px solid #d3d3d3;
 }
 
 select {
-  height:40px;
-  padding:5px 5px 5px 10px;
+  height:38px;
+  padding:5px 5px 0px 0px;
   margin-bottom: 10px;
-  border-radius: 10px;
+  border-radius: 0px;
   text-transform: none;
-  width: 150px;
+  width: 100px;
   background: #FFFFFF;
-  color:#000;
+  color: #d3d3d3;
   font-size: 20px;
-  border: 2px inset #EBE9ED;
+  border: none;
+  border-bottom: 2px solid #d3d3d3;
   
   /* make arrow and background */
 
   background:
-    linear-gradient(45deg, transparent 50%, black 50%),
-    linear-gradient(135deg, black 50%, transparent 50%),
+    linear-gradient(45deg, transparent 50%, #d3d3d3 50%),
+    linear-gradient(135deg, #d3d3d3 50%, transparent 50%),
     linear-gradient(to right, white, white);
   background-position:
-    calc(100% - 20px) calc(1em - 3px),
-    calc(100% - 13px) calc(1em - 3px),
+    calc(100% - 7px) calc(1em - 3px),
+    calc(100%) calc(1em - 3px),
     100% 0;
   background-size:
     7px 7px,
@@ -58,14 +60,39 @@ select {
   
   
 input[id*=In]:focus{
-  box-shadow: 3px 3px 10px #446;
+  border-bottom: 2px solid #000;
+  color: #000;
   outline: none;
 }
 
 
 select[id*=In]:focus{
-  box-shadow: 3px 3px 10px #446;
+  border-bottom: 2px solid #000;
+  color: #000;
   outline: none;
+  
+  
+  background:
+    linear-gradient(45deg, transparent 50%, black 50%),
+    linear-gradient(135deg, black 50%, transparent 50%),
+    linear-gradient(to right, white, white);
+  background-position:
+    calc(100% - 7px) calc(1em - 3px),
+    calc(100%) calc(1em - 3px),
+    100% 0;
+  background-size:
+    7px 7px,
+    7px 7px,
+    2.5em 2.5em;
+  background-repeat: no-repeat;
+
+  /* reset */
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-appearance:none;
+  -moz-appearance:none;
+  
 }
    
    
@@ -74,7 +101,7 @@ abbr {
   font-family: arial;
   border-radius: 100px;
   border: 1px solid blue;
-  cursor: help;
+  cursor: default;
   text-decoration: none !important;
   color: blue;
 }
@@ -82,7 +109,6 @@ abbr {
 
 abbr:hover {
   border: 1px solid grey;
-  cursor: help;
   text-decoration: none !important;
   color: grey;
   
@@ -109,6 +135,31 @@ pre {
   font-size: 20px;
 }
 
+
+div.descriptions {
+  position: absolute;
+  top: 100px;
+  left: -15px;
+  height: 0px;
+}
+
+
+div.form {
+  position: absolute;
+  top: 134px;
+  left: 320px;
+  height: 0px;
+}
+
+
+div.questions {
+  position: absolute;
+  top: 125px;
+  left: 410px;
+  height: 0px;
+}
+
+
 </style>
   <!--Metadata set up -->
   <title>Tule Elk Simulation</title>
@@ -125,34 +176,63 @@ pre {
 <!--Creates a div that hides when button is pressed-->
 <div id="inputs">
 
+  <!--instrutions-->
+  <p>Hover over question marks for more information</p><br>
 
-<p>Hover over question marks for more information</p><br>
+  <!--div for the descriptions-->
+  <div class="descriptions">
+    <pre style="text-align:right;"> 
+      Generations to Simulate: <br>
+      Likelihood of Environment Change: <br>
+      Migration Rate: <br>
+      Mutation Rate: <br>
+      Allele to Simulate: <br>
+    </pre>
+  </div>
+  
+  
+  
+  <!--div for the form/inputs-->
+  <div class="form">
+    <form id="frm1" onkeyup="return checkCorrect()">
+    <input type="number" id="yearIn" value="100" min="50" max="500" step="10"><br>
+    <input type="number" id="percentIn" value="50" min="1" max="100" step="1"><br>
+    <input type="number" id="migrationIn" value="0" min="0" max="10" step="1"><br>
+    <input type="number" id="mutationIn" value="0" min="0" max="10" step="1"><br>
+    <select id="allelesIn">
+      <option value="BL42">BL42</option>
+      <option value="BM6505">BM6505</option>
+      <option value="BM415">BM415</option>
+      <option value="RM006">RM006</option>
+      <option value="BM5004">BM5004</option>
+      <option value="BM4107">BM4107</option>
+      <option value="FCB193">FCB193</option>
+      <option value="BM888">BM888</option>
+      <option value="BM1009">BM1009</option>
+      <option value="MAF109">MAF109</option>
+      <option value="BOVIRBP">BOVIRBP</option>
+      <option value="JP15">JP15</option>
+    </select>
+    </form> 
+    <button onClick="simAllGen()">Submit</button>
+  </div>
 
-<!--Inputs-->
-<form id="frm1" onkeyup="return checkCorrect()">
-  <pre>Generations to Simulate: <input type="number" id="yearIn" value="100" min="50" max="500" step="10"> <abbr title="How many generations will be simulated"> ? </abbr></pre>
-  <pre>Likelihood of Environment Change: <input type="number" id="percentIn" value="50" min="1" max="100" step="1"> <abbr title="The percent chance that enviroment will change and make certain alleles more evolutionarily helpful"> ? </abbr></pre>
-  <pre>Migration Rate: <input type="number" id="migrationIn" value="0" min="0" max="10" step="1"> <abbr title="How much migration in and out of the herd"> ? </abbr></pre>
-  <pre>Mutation Rate: <input type="number" id="mutationIn" value="0" min="0" max="10" step="1"> <abbr title="Likelyhood that alleles will mutate"> ? </abbr></pre>
-  <pre>Allele to Simulate: <select id="allelesIn">
-    <option value="BL42">BL42</option>
-    <option value="BM6505">BM6505</option>
-    <option value="BM415">BM415</option>
-    <option value="RM006">RM006</option>
-    <option value="BM5004">BM5004</option>
-    <option value="BM4107">BM4107</option>
-    <option value="FCB193">FCB193</option>
-    <option value="BM888">BM888</option>
-    <option value="BM1009">BM1009</option>
-    <option value="MAF109">MAF109</option>
-    <option value="BOVIRBP">BOVIRBP</option>
-    <option value="JP15">JP15</option>
-  </select> <abbr title="Which allele will be simulated"> ? </abbr></pre>
-</form> 
+
+
+  <!--div for the question marks-->
+  <div class="questions">
+    <pre>
+      <abbr title="How many generations will be simulated"> ? </abbr><br>
+      <abbr title="The percent chance that enviroment will change and make certain alleles more evolutionarily helpful"> ? </abbr><br>
+      <abbr title="How much migration in and out of the herd"> ? </abbr><br>
+      <abbr title="Likelyhood that alleles will mutate"> ? </abbr><br>
+      <abbr title="Which allele will be simulated"> ? </abbr>
+    </pre>
+  </div>
 
 
 
-<button onClick="simAllGen()">Submit</button>
+
 
 
 
