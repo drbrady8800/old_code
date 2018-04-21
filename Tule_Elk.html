@@ -5,6 +5,23 @@
 <head>
 <style>
 /*CSS*/
+
+/*sets up printer*/
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #results, #results * {
+    visibility: visible;
+  }
+  #results {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}
+
+
 input[id*=In] {
   height:29px;
   padding:5px 5px 0px 0px;
@@ -150,7 +167,7 @@ div.error {
   left: 15px;
   height: 0px;
 }
-div.buttons2 {
+#buttons2 {
   display: table;
   margin: 5px auto;
   
@@ -171,7 +188,7 @@ div.buttons2 {
   top: 0px;
   left: 0px;
   width: 80%; 
-  height: 100%;
+  height: 50%;
   border: 2px solid #d3d3d3;
   background: rgba(180, 180, 180, 0.5);
   display: none;
@@ -269,10 +286,13 @@ body {
 <!--Creates a div of reset button and graph-->
 <div id="results">
   <canvas id="myChart"></canvas>
-  <div class="buttons2">
-    <pre><button onClick="showInput()">Reset</button> <button onClick="simAllGen()" style="width: 110px;">Run Again</button> <button onClick="">Print</button></pre>
-  </div>
+  <pre padding="0px" style="color: black; text-align:center; line-height:.1;">Generation</pre>  
 </div>
+
+
+<div id="buttons2">
+  <pre><button onClick="showInput()">Reset</button> <button onClick="simAllGen()" style="width: 110px;">Run Again</button> <button onClick="window.print()">Print</button></pre>
+  </div>
 
 
 
@@ -355,9 +375,11 @@ function assignVars() {
 }
 
 
+
+
 //create a graph
 function createGraph() {
-Chart.defaults.global.defaultFontColor = "white";
+  Chart.defaults.global.defaultFontColor = "black";
   var xAxis = document.getElementById("genIn").value;
   var xPoints = [];
   var yPoints = [];
@@ -648,10 +670,12 @@ function checkCorrect() {
 function hideInput() {
   document.getElementById("inputs").style.display = "none";
   document.getElementById("results").style.display = "block";
+  document.getElementById("buttons2").style.display = "table";
 }
 function showInput() {
   document.getElementById("inputs").style.display = "block";
   document.getElementById("results").style.display = "none";
+  document.getElementById("buttons2").style.display = "none";
 }
 </script>
 </body>
