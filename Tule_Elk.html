@@ -5,8 +5,6 @@
 <head>
 <style>
 /*CSS*/
-
-
 input[id*=In] {
   height:29px;
   padding:5px 5px 0px 0px;
@@ -19,7 +17,6 @@ input[id*=In] {
   border: none;
   border-bottom: 2px solid white;
 }
-
 select {
   height:38px;
   padding:5px 5px 0px 0px;
@@ -34,7 +31,6 @@ select {
   border-bottom: 2px solid white;
   
   /* make arrow and background */
-
   background:
     linear-gradient(45deg, transparent 50%, #d3d3d3 50%),
     linear-gradient(135deg, #d3d3d3 50%, transparent 50%),
@@ -48,7 +44,6 @@ select {
     7px 7px,
     2.5em 2.5em;
   background-repeat: no-repeat;
-
   /* reset */
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -64,8 +59,6 @@ input[id*=In]:focus{
   color: black;
   outline: none;
 }
-
-
 select[id*=In]:focus{
   border-bottom: 2px solid #000;
   color: #000;
@@ -85,7 +78,6 @@ select[id*=In]:focus{
     7px 7px,
     2.5em 2.5em;
   background-repeat: no-repeat;
-
   /* reset */
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -105,15 +97,12 @@ abbr {
   text-decoration: none !important;
   color: black;
 }
-
-
 abbr:hover {
   border: 1px solid white;
   text-decoration: none !important;
   color: white;
   
 }
-
 button {
   
   width: 80px;
@@ -123,52 +112,44 @@ button {
   outline-style: none;
   color: #FFF;
 }
-
-
 button:active {
   background: #6593F5;
 }
-
-
 pre {
   font-family: times new roman;
   font-size: 20px;
   color: white;
 }
-
-
 div.descriptions {
   position: absolute;
   top: 0px;
   left: -15px;
   height: 0px;
 }
-
-
 div.form {
   position: absolute;
   top: 34px;
   left: 320px;
   height: 0px;
 }
-
-
 div.questions {
   position: absolute;
   top: 25px;
   left: 410px;
   height: 0px;
 }
-
-
 div.button {
   position: absolute;
   top: 275px;
   left: 210px;
   height: 0px;
 }
-
-
+div.error {
+  position: absolute;
+  top: 310px;
+  left: 15px;
+  height: 0px;
+}
 #inputs {
   position: relative;
   margin: 0 auto;
@@ -179,9 +160,6 @@ div.button {
   border: 2px solid #d3d3d3;
   background: rgba(180, 180, 180, 0.5);
 }
-
-
-
 #results {
   position: relative;
   margin: 0 auto;
@@ -193,14 +171,10 @@ div.button {
   background: rgba(180, 180, 180, 0.5);
   display: none;
 }
-
-
 body {
     background: url("http://www.whimsandfancies.com/wp-content/gallery/point_reyes/tule_elk_clsup.jpg") no-repeat center fixed; 
     background-size: cover;
 }
-
-
 </style>
   <!--Metadata set up -->
   <title>Tule Elk Simulation</title>
@@ -239,7 +213,7 @@ body {
   <div class="form">
     <form id="frm1" onkeyup="return checkCorrect()">
     <input type="number" id="genIn" value="100" min="50" max="500" step="10"><br>
-    <input type="number" id="envirIn" value="50" min="1" max="100" step="1"><br>
+    <input type="number" id="envirIn" value="10" min="1" max="100" step="1"><br>
     <input type="number" id="migrationIn" value="0" min="0" max="10" step="1"><br>
     <input type="number" id="mutationIn" value="0" min="0" max="10" step="1"><br>
     <select id="allelesIn">
@@ -277,6 +251,12 @@ body {
   <div class="button">
     <button onClick="simAllGen()">Submit</button>
   </div>
+  
+  
+  <!--Creates a div for error message-->
+  <div class="error">
+    <p style="color:white; text-align:center;" id="whichOne"></p>
+  </div>
 </div>
 
 
@@ -285,7 +265,6 @@ body {
 <div id="results">
   <button onClick="showInput()">Reset</button>
   <p id="demo">g</p>
-
 </div>
 
 
@@ -303,15 +282,10 @@ var BM888 = {};
 var BM1009 = {};
 var MAF109 = {};
 var JP15 = {};
-
 //creates an array of all dictionaries
 var alleles = [];
-
-
 var pop;
 var popPoints = [];
-
-
 //input variable
 var gens;
 var envirChange;
@@ -319,7 +293,6 @@ var migration;
 var mutation;
 var allele;
 var alleleToSim;
-
 //fitness of the alleles
 var fit1;
 var fit2;
@@ -335,6 +308,7 @@ var AaCap;
 var aaCap;
 
 
+
 function assignVars() {
 //creates all values of alleles as dictionaries
   BL42 = {name: "BL42", numAlleles: 2, alleleA: 1, alleleB: 2};
@@ -346,15 +320,10 @@ function assignVars() {
   BM1009 = {name: "BM1009", numAlleles: 1, alleleA: 1};
   MAF109 = {name: "MAF109", numAlleles: 2, alleleA: 1, alleleB: 2};
   JP15 = {name: "JP15", numAlleles: 1, alleleA: 1};
-
 //creates an array of all dictionaries
   alleles = [BL42, BM6505, RM006, BM5004, BM4017, BM888, BM1009, MAF109, JP15];
-
-
   pop = 440;
   popPoints = [440];
-
-
 //input variable
   gens = document.getElementById("genIn").value;
   envirChange = document.getElementById("envirIn").value;;
@@ -362,7 +331,6 @@ function assignVars() {
   mutation = document.getElementById("mutationIn").value;;
   allele = document.getElementById("allelesIn").value;;
   alleleToSim = findAllele();
-
 //fitness of the alleles
   fit1 = 1;
   fit2 = 1;
@@ -381,18 +349,29 @@ function assignVars() {
 
 
 function simAllGen() {
-  hideInput();
-  assignVars();
-  for(var i = 0; i < gens; i++) {
-    changeFit();
-    createIndividuals();
-    calcOffspring();
-    calcPop();
+  if(canSubmit) {
+    hideInput();
+    assignVars();
+    for(var i = 0; i < gens; i++) {
+      changeFit();
+      createIndividuals();
+      calcOffspring();
+      calcPop();
+    }
+    document.getElementById("demo").innerHTML = popPoints;
+  } else {
+    if(theFalse == 0) {
+      name = "Generations to Simulate";
+    } else if(theFalse == 1) {
+      name = "Likelihood of Environment Change";
+    } else if(theFalse == 2) {
+      name = "Migration Rate";
+    } else if(theFalse == 3) {
+      name = "Mutation Rate";
+    }
+    document.getElementById("whichOne").innerHTML = "**The value in " + name + " is outside the required range. Please enter a number between " + idMins[theFalse] + " and " + idMaxes[theFalse] + ".";
   }
-  document.getElementById("demo").innerHTML = popPoints;
 }
-
-
 //calculates the total pop for each allele based on fitness
 function calcPop() {
   //calculates the new pops based on fitness
@@ -437,10 +416,6 @@ function calcPop() {
     alleleToSim.alleleB = 0;
   }
 }
-
-
-
-
 //does hardey-wineberg to calculate new population numbers
 function calcOffspring() {
   //assumes 80% of the generation mates and each pair makes 3 children
@@ -513,9 +488,6 @@ function calcOffspring() {
     }
   }
 }
-
-
-
 //changes the fitness of genes based on random environmental changes
 function changeFit() {
   if(envirChange/100 > Math.random()) {
@@ -550,9 +522,6 @@ function findAllele() {
     }
   }
 }
-
-
-
 //creates and array of individuals
 function createIndividuals() {
   var p = alleleToSim.alleleA;
@@ -588,49 +557,55 @@ function createIndividuals() {
   //gives population size
   pop = popAA + popAa + popaa;
 }
-
-
-
-
-
-
-
-
 //at first, we define a variable stating that an event listener has been attached onto the field
 var validate = false;
 //id names
 var ids = ["genIn", "envirIn", "migrationIn", "mutationIn"];
 //id mins and maxes
-var idMins = [50, 1, 0, 0, 0];
-var idMaxes =[500, 100, 100, 10, 10];
+var idMins = [50, 1, 0, 0];
+var idMaxes = [500, 100, 10, 10];
+var canSubmit = true;
+var count = 0;
+var textInBox;
+var value;
+var name;
+var theFalse;
 
 
 
 function checkCorrect() {
   for(var i = 0; i < ids.length; i++) {
-    var textInBox = document.forms["frm1"][ids[i]].value;
-    var value = textInBox.replace(/[^\d]/g, '');
+    textInBox = document.forms["frm1"][ids[i]].value;
+    value = textInBox.replace(/[^\d]/g, '');
     if(value <= idMaxes[i] && value >= idMins[i]) {
+      count++;
       document.getElementById(ids[i]).style.borderBottom=null;
+      document.getElementById(ids[i]).style.color=null;
+      document.getElementById("whichOne").innerHTML = "";
     } 
     else {
+      theFalse = i;
+      count = 0;
       document.getElementById(ids[i]).style.borderBottom="2px solid red";
+      document.getElementById(ids[i]).style.color="red";
     }
   }
+  if(count == 4) {
+    canSubmit=true;
+    count = 0;
+  } else {
+    canSubmit=false;
+    count = 0;
+  }
 }
-
-
 //hides and show results/inputs
 function hideInput() {
   document.getElementById("inputs").style.display = "none";
   document.getElementById("results").style.display = "block";
 }
-
-
 function showInput() {
   document.getElementById("inputs").style.display = "block";
   document.getElementById("results").style.display = "none";
-
 }
 </script>
 </body>
