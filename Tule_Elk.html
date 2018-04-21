@@ -13,11 +13,11 @@ input[id*=In] {
   margin-bottom: 10px;
   text-transform: none;
   width: 100px;
-  background: #FFFFFF;
-  color: #d3d3d3;
+  background: rgb(0, 0, 0, 0);
+  color: white;
   font-size: 20px;
   border: none;
-  border-bottom: 2px solid #d3d3d3;
+  border-bottom: 2px solid white;
 }
 
 select {
@@ -28,17 +28,17 @@ select {
   text-transform: none;
   width: 100px;
   background: #FFFFFF;
-  color: #d3d3d3;
+  color: white;
   font-size: 20px;
   border: none;
-  border-bottom: 2px solid #d3d3d3;
+  border-bottom: 2px solid white;
   
   /* make arrow and background */
 
   background:
     linear-gradient(45deg, transparent 50%, #d3d3d3 50%),
     linear-gradient(135deg, #d3d3d3 50%, transparent 50%),
-    linear-gradient(to right, white, white);
+    linear-gradient(to right, transparent, transparent);
   background-position:
     calc(100% - 7px) calc(1em - 3px),
     calc(100%) calc(1em - 3px),
@@ -75,7 +75,7 @@ select[id*=In]:focus{
   background:
     linear-gradient(45deg, transparent 50%, black 50%),
     linear-gradient(135deg, black 50%, transparent 50%),
-    linear-gradient(to right, white, white);
+    linear-gradient(to right, transparent, transparent);
   background-position:
     calc(100% - 7px) calc(1em - 3px),
     calc(100%) calc(1em - 3px),
@@ -100,45 +100,46 @@ abbr {
   font-size: 20px;
   font-family: arial;
   border-radius: 100px;
-  border: 1px solid blue;
+  border: 1px solid black;
   cursor: default;
   text-decoration: none !important;
-  color: blue;
+  color: black;
 }
 
 
 abbr:hover {
-  border: 1px solid grey;
+  border: 1px solid white;
   text-decoration: none !important;
-  color: grey;
+  color: white;
   
 }
 
 button {
-  border: 1px solid black;
-  border-radius: 10px;
+  
   width: 80px;
   height: 40px;
-  font-size: 20px;
-  background: orange;
+  font-size: 18px;
+  background: #0080FF;
   outline-style: none;
+  color: #FFF;
 }
 
 
 button:active {
-  background: red;
+  background: #6593F5;
 }
 
 
 pre {
   font-family: times new roman;
   font-size: 20px;
+  color: white;
 }
 
 
 div.descriptions {
   position: absolute;
-  top: 100px;
+  top: 0px;
   left: -15px;
   height: 0px;
 }
@@ -146,7 +147,7 @@ div.descriptions {
 
 div.form {
   position: absolute;
-  top: 134px;
+  top: 34px;
   left: 320px;
   height: 0px;
 }
@@ -154,9 +155,38 @@ div.form {
 
 div.questions {
   position: absolute;
-  top: 125px;
+  top: 25px;
   left: 410px;
   height: 0px;
+}
+
+
+div.button {
+  position: absolute;
+  top: 275px;
+  left: 210px;
+  height: 0px;
+}
+
+
+#inputs {
+  position: relative;
+  margin: 0 auto;
+  top: 0px;
+  left: 0px;
+  width: 500px; 
+  height: 370px;
+  border: 2px solid #d3d3d3;
+  background: rgba(180, 180, 180, 0.5);
+}
+
+
+
+body {
+    background-image: url("https://c1.staticflickr.com/4/3313/3200988746_3743b6e51a_b.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
 }
 
 
@@ -165,19 +195,21 @@ div.questions {
   <title>Tule Elk Simulation</title>
   <meta charset="UTF-8">
 </head>
+<body>
 
 <!--HTML-->
 
 
 <!--Heading-->
-<h1>Tule Elk Simulation</h1>
-
+<h1 style="text-align:center;">Tule Elk Simulation</h1>
+<!--instrutions-->
+<p style="text-align:center;">Hover over question marks for more information</p><br>
 
 <!--Creates a div that hides when button is pressed-->
 <div id="inputs">
 
-  <!--instrutions-->
-  <p>Hover over question marks for more information</p><br>
+  
+  
 
   <!--div for the descriptions-->
   <div class="descriptions">
@@ -213,8 +245,7 @@ div.questions {
       <option value="BOVIRBP">BOVIRBP</option>
       <option value="JP15">JP15</option>
     </select>
-    </form> 
-    <button onClick="simAllGen()">Submit</button>
+    </form>
   </div>
 
 
@@ -229,13 +260,12 @@ div.questions {
       <abbr title="Which allele will be simulated"> ? </abbr>
     </pre>
   </div>
-
-
-
-
-
-
-
+  
+  
+  <!--Creates a div for the button-->
+  <div class="button">
+    <button onClick="simAllGen()">Submit</button>
+  </div>
 </div>
 
 
@@ -594,3 +624,4 @@ function showInput() {
 
 }
 </script>
+</body>
