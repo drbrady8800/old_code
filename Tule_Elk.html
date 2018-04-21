@@ -173,55 +173,102 @@ pre {
 
 <script>
 //creates all values of alleles as dictionaries
-var BL42 = {name: "BL42", numAlleles: 2, alleleA: 1, alleleB: 2};
-var BM6505 = {name: "BM6505", numAlleles: 1, alleleA: 1};
-var RM006 = {name: "RM006", numAlleles: 1, alleleA: 1};
-var BM5004 = {name: "BM5004", numAlleles: 2, alleleA: 1, alleleB: 2};
-var BM4017 = {name: "BM4017", numAlleles: 1, alleleA: 1};
-var BM888 = {name: "BM888", numAlleles: 2, alleleA: 0.694, alleleB: 0.306};
-var BM1009 = {name: "BM1009", numAlleles: 1, alleleA: 1};
-var MAF109 = {name: "MAF109", numAlleles: 2, alleleA: 1, alleleB: 2};
-var JP15 = {name: "JP15", numAlleles: 1, alleleA: 1};
+var BL42 = {};
+var BM6505 = {};
+var RM006 = {};
+var BM5004 = {};
+var BM4017 = {};
+var BM888 = {};
+var BM1009 = {};
+var MAF109 = {};
+var JP15 = {};
 
 //creates an array of all dictionaries
-var alleles = [BL42, BM6505, RM006, BM5004, BM4017, BM888, BM1009, MAF109, JP15];
+var alleles = [];
 
 
-var pop = 440;
-var popPoints = [440];
+var pop;
+var popPoints = [];
 
 
 //input variable
-var gens = 50;
-var envirChange = 100;
-var migration = 10;
-var mutation = 10;
-var allele = "BM888";
-var alleleToSim = findAllele();
+var gens;
+var envirChange;
+var migration;
+var mutation;
+var allele;
+var alleleToSim;
 
 //fitness of the alleles
-var fit1 = 1;
-var fit2 = 1;
-var popAA = 0;
-var popAa = 0;
-var popaa = 0;
-var popAAOriginal = 0;
-var popAaOriginal = 0;
-var popaaOriginal = 0;
+var fit1;
+var fit2;
+var fit3;
+var popAA;
+var popAa;
+var popaa;
+var popAAOriginal;
+var popAaOriginal;
+var popaaOriginal;
 var AACap;
 var AaCap;
 var aaCap;
 
 
+function assignVars() {
+//creates all values of alleles as dictionaries
+  BL42 = {name: "BL42", numAlleles: 2, alleleA: 1, alleleB: 2};
+  BM6505 = {name: "BM6505", numAlleles: 1, alleleA: 1};
+  RM006 = {name: "RM006", numAlleles: 1, alleleA: 1};
+  BM5004 = {name: "BM5004", numAlleles: 2, alleleA: 1, alleleB: 2};
+  BM4017 = {name: "BM4017", numAlleles: 1, alleleA: 1};
+  BM888 = {name: "BM888", numAlleles: 2, alleleA: 0.694, alleleB: 0.306};
+  BM1009 = {name: "BM1009", numAlleles: 1, alleleA: 1};
+  MAF109 = {name: "MAF109", numAlleles: 2, alleleA: 1, alleleB: 2};
+  JP15 = {name: "JP15", numAlleles: 1, alleleA: 1};
+
+//creates an array of all dictionaries
+  alleles = [BL42, BM6505, RM006, BM5004, BM4017, BM888, BM1009, MAF109, JP15];
+
+
+  pop = 440;
+  popPoints = [440];
+
+
+//input variable
+  gens = 50;
+  envirChange = 10;
+  migration = 10;
+  mutation = 10;
+  allele = "BM888";
+  alleleToSim = findAllele();
+
+//fitness of the alleles
+  fit1 = 1;
+  fit2 = 1;
+  fit3 = 1;
+  popAA = 0;
+  popAa = 0;
+  popaa = 0;
+  popAAOriginal = 0;
+  popAaOriginal = 0;
+  popaaOriginal = 0;
+  AACap;
+  AaCap;
+  aaCap;
+}
+
+
+
 function simAllGen() {
   hideInput();
+  assignVars();
   for(var i = 0; i < gens; i++) {
     changeFit();
     createIndividuals();
     calcOffspring();
     calcPop();
   }
-  document.getElementById('demo').innerHTML = popPoints;
+  document.getElementById("demo").innerHTML = popPoints;
 }
 
 
@@ -263,7 +310,7 @@ function calcPop() {
   //calculates the new frequencies
   if(pop > 0) {
     alleleToSim.alleleA = ((popAA *2.0) + popAa) / (pop*2);
-	  alleleToSim.alleleB = 1 - alleleToSim.alleleA;
+	alleleToSim.alleleB = 1 - alleleToSim.alleleA;
   } else {
     alleleToSim.alleleA = 0;
     alleleToSim.alleleB = 0;
@@ -406,7 +453,7 @@ function createIndividuals() {
   
   
   //assigns the number of pops for each allele
-	popAA = Math.round((p * p) * pop); //get number of AA
+  popAA = Math.round((p * p) * pop); //get number of AA
   popAa = Math.round((2.0 * p * q) * pop); //get number of Aa
   popaa = Math.round((q * q) * pop); //get number of aa
   
@@ -464,20 +511,6 @@ function hideInput() {
 function showInput() {
   document.getElementById("inputs").style.display = "block";
   document.getElementById("results").style.display = "none";
-  
-  //reset all variables
-  pop = 440;
-  popPoints = [440];
-  fit1 = 1;
-  fit2 = 1;
-  popAA = 0;
-  popAa = 0;
-  popaa = 0;
-  popAAOriginal = 0;
-  popAaOriginal = 0;
-  popaaOriginal = 0;
-  AACap = 0;
-  AaCap = 0;
-  aaCap = 0;
+
 }
 </script>
