@@ -263,10 +263,11 @@ body {
 
 <!--Creates a div of reset button and graph-->
 <div id="results">
+  <canvas id="myChart"></canvas>
   <button onClick="showInput()">Reset</button>
   <p id="demo">g</p>
 </div>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
 
 
@@ -306,9 +307,6 @@ var popaaOriginal;
 var AACap;
 var AaCap;
 var aaCap;
-
-
-
 function assignVars() {
 //creates all values of alleles as dictionaries
   BL42 = {name: "BL42", numAlleles: 2, alleleA: 1, alleleB: 2};
@@ -347,6 +345,42 @@ function assignVars() {
 }
 
 
+//create a graph
+function createGraph() {
+var xAxis = document.getElementById("genIn").value;
+var xPoints = [];
+var yPoints = [];
+for(var i = 0; i < popPoints.length; i++) {
+  yPoints.push(popPoints[i]);
+}
+for(var i = 0; i < xAxis; i++) {
+  xPoints.push(i);
+}
+var ctx = document.getElementById('myChart').getContext('2d');
+var chart = new Chart(ctx, {
+    type: 'line',
+    // The data for our dataset
+    data: {
+        labels: xPoints,
+        datasets: [{
+            label: "Population",
+            backgroundColor: 'rgba(255, 99, 132, 0)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: yPoints,
+    },
+
+    // Configuration options go here
+    options: {
+        elements: {
+            line: {
+                tension: 0, // disables bezier curves
+            }
+        }
+    }
+});
+}
+
+
 
 function simAllGen() {
   if(canSubmit) {
@@ -358,6 +392,7 @@ function simAllGen() {
       calcOffspring();
       calcPop();
     }
+    createGraph();
     document.getElementById("demo").innerHTML = popPoints;
   } else {
     if(theFalse == 0) {
@@ -508,9 +543,6 @@ function changeFit() {
     }
   }
 }
-
-
-
 //finds which gene the user wants to simulate
 function findAllele() {
   for(var i = 0; i < alleles.length; i++) {
@@ -570,9 +602,6 @@ var textInBox;
 var value;
 var name;
 var theFalse;
-
-
-
 function checkCorrect() {
   for(var i = 0; i < ids.length; i++) {
     textInBox = document.forms["frm1"][ids[i]].value;
