@@ -60,8 +60,8 @@ select {
   
   
 input[id*=In]:focus{
-  border-bottom: 2px solid #000;
-  color: #000;
+  border-bottom: 2px solid black;
+  color: black;
   outline: none;
 }
 
@@ -182,6 +182,19 @@ div.button {
 
 
 
+#results {
+  position: relative;
+  margin: 0 auto;
+  top: 0px;
+  left: 0px;
+  width: 500px; 
+  height: 370px;
+  border: 2px solid #d3d3d3;
+  background: rgba(180, 180, 180, 0.5);
+  display: none;
+}
+
+
 body {
     background-image: url("https://c1.staticflickr.com/4/3313/3200988746_3743b6e51a_b.jpg");
     background-size: cover;
@@ -227,8 +240,8 @@ body {
   <!--div for the form/inputs-->
   <div class="form">
     <form id="frm1" onkeyup="return checkCorrect()">
-    <input type="number" id="yearIn" value="100" min="50" max="500" step="10"><br>
-    <input type="number" id="percentIn" value="50" min="1" max="100" step="1"><br>
+    <input type="number" id="genIn" value="100" min="50" max="500" step="10"><br>
+    <input type="number" id="envirIn" value="50" min="1" max="100" step="1"><br>
     <input type="number" id="migrationIn" value="0" min="0" max="10" step="1"><br>
     <input type="number" id="mutationIn" value="0" min="0" max="10" step="1"><br>
     <select id="allelesIn">
@@ -271,7 +284,7 @@ body {
 
 
 <!--Creates a div of reset button and graph-->
-<div id="results" style="display: none;">
+<div id="results">
   <button onClick="showInput()">Reset</button>
   <p id="demo">g</p>
 
@@ -345,11 +358,11 @@ function assignVars() {
 
 
 //input variable
-  gens = 50;
-  envirChange = 10;
-  migration = 10;
-  mutation = 10;
-  allele = "BM888";
+  gens = document.getElementById("genIn").value;
+  envirChange = document.getElementById("envirIn").value;;
+  migration = document.getElementById("migrationIn").value;;
+  mutation = document.getElementById("mutationIn").value;;
+  allele = document.getElementById("allelesIn").value;;
   alleleToSim = findAllele();
 
 //fitness of the alleles
@@ -588,7 +601,7 @@ function createIndividuals() {
 //at first, we define a variable stating that an event listener has been attached onto the field
 var validate = false;
 //id names
-var ids = ["yearIn", "percentIn", "migrationIn", "herdsIn", "mutationIn"];
+var ids = ["genIn", "envirIn", "migrationIn", "mutationIn"];
 //id mins and maxes
 var idMins = [50, 1, 0, 0, 0];
 var idMaxes =[500, 100, 100, 10, 10];
@@ -600,12 +613,10 @@ function checkCorrect() {
     var textInBox = document.forms["frm1"][ids[i]].value;
     var value = textInBox.replace(/[^\d]/g, '');
     if(value <= idMaxes[i] && value >= idMins[i]) {
-      document.getElementById(ids[i]).style.border="2px inset #EBE9ED";
-      document.getElementById(ids[i]).style.padding="5px 5px 5px 10px";
+      document.getElementById(ids[i]).style.borderBottom=null;
     } 
     else {
-      document.getElementById(ids[i]).style.border="4px inset red";
-      document.getElementById(ids[i]).style.padding="3px 3px 3px 8px";
+      document.getElementById(ids[i]).style.borderBottom="2px solid red";
     }
   }
 }
