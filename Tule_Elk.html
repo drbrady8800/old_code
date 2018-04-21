@@ -265,8 +265,11 @@ body {
 <div id="results">
   <canvas id="myChart"></canvas>
   <button onClick="showInput()">Reset</button>
-  <p id="demo">g</p>
 </div>
+
+
+
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
 
@@ -347,37 +350,44 @@ function assignVars() {
 
 //create a graph
 function createGraph() {
-var xAxis = document.getElementById("genIn").value;
-var xPoints = [];
-var yPoints = [];
-for(var i = 0; i < popPoints.length; i++) {
-  yPoints.push(popPoints[i]);
-}
-for(var i = 0; i < xAxis; i++) {
-  xPoints.push(i);
-}
-var ctx = document.getElementById('myChart').getContext('2d');
-var chart = new Chart(ctx, {
-    type: 'line',
-    // The data for our dataset
-    data: {
-        labels: xPoints,
-        datasets: [{
-            label: "Population",
-            backgroundColor: 'rgba(255, 99, 132, 0)',
-            borderColor: 'rgb(255, 99, 132)',
-            data: yPoints,
-    },
+  var xAxis = document.getElementById("genIn").value;
+  var xPoints = [];
+  var yPoints = [];
+  for(var i = 0; i < popPoints.length; i+=xAxis/20) {
+    yPoints.push(popPoints[i]);
+  }
+  for(var i = 0; i <= xAxis; i+=xAxis/20) {
+    xPoints.push(i);
+  }
+  var ctx = document.getElementById('myChart').getContext('2d');
+  var chart = new Chart(ctx, {
+      type: 'line',
+    
+      axisX:{
+        interval: 50,
+      },
+    
+      // The data for our dataset
+      data: {
+          labels: xPoints,
+          datasets: [{
+              label: "Population",
+              backgroundColor: 'rgba(255, 99, 132, 0)',
+              borderColor: 'rgb(255, 99, 0)',
+              data: yPoints,
+          }]
+      },
 
-    // Configuration options go here
-    options: {
+      // Configuration options go here
+      options: {
+      
         elements: {
-            line: {
-                tension: 0, // disables bezier curves
-            }
+          line: {
+              tension: 0, // disables bezier curves
+          }
         }
-    }
-});
+      }
+  });
 }
 
 
@@ -393,7 +403,6 @@ function simAllGen() {
       calcPop();
     }
     createGraph();
-    document.getElementById("demo").innerHTML = popPoints;
   } else {
     if(theFalse == 0) {
       name = "Generations to Simulate";
