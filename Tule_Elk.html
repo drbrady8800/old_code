@@ -11,10 +11,10 @@
   body * {
     visibility: hidden;
   }
-  #results, #results * {
+  #myChart, #myChart * {
     visibility: visible;
   }
-  #results {
+  #myChart {
     position: absolute;
     left: 0;
     top: 0;
@@ -283,7 +283,7 @@ body {
 <!--Creates a div of reset button and graph-->
 <div id="results">
   <canvas id="myChart"></canvas>
-  <pre padding="0px" style="color: black; text-align:center; line-height:.1;">Generation</pre>  
+  <pre id="genLabel" padding="0px" style="color: black; text-align:center; line-height:.1;">Generation</pre>  
 </div>
 
 
@@ -293,7 +293,7 @@ body {
 
 
 <!--cite the picture-->
-<pre style="font-size: 10px;"> *Photo courtesy of Soma Acharya, writer at Whims and Fancies, url:http://www.whimsandfancies.com/winter-warmth/</pre>
+<pre position="absolute;" bottom="0px;" style="font-size: 10px;"> *Photo courtesy of Soma Acharya, writer at Whims and Fancies, url:http://www.whimsandfancies.com/winter-warmth/</pre>
 
 
 
