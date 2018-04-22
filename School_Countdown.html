@@ -210,7 +210,7 @@ body {
 <!--Heading-->
 <h1 style="text-align:center;">Tule Elk Simulation</h1>
 <!--instrutions-->
-<p style="text-align:center;">Hover over question marks for more information</p><br>
+<p id="directions" style="text-align:center;">Hover over question marks for more information</p><br>
 
 <!--Creates a div that hides when button is pressed-->
 <div id="inputs">
@@ -671,11 +671,13 @@ function hideInput() {
   document.getElementById("inputs").style.display = "none";
   document.getElementById("results").style.display = "block";
   document.getElementById("buttons2").style.display = "table";
+  document.getElementById("directions").style.display = "none";
 }
 function showInput() {
   document.getElementById("inputs").style.display = "block";
   document.getElementById("results").style.display = "none";
   document.getElementById("buttons2").style.display = "none";
+  document.getElementById("directions").style.display = "block";
 }
 </script>
 </body>
