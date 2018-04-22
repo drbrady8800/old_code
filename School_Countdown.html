@@ -1,683 +1,435 @@
 <!DOCTYPE html>
 <html lang="en-US">
 
-
+<!--Metadata set up -->
 <head>
 <style>
 /*CSS*/
 
-/*sets up printer*/
-@media print {
-  body * {
-    visibility: hidden;
-  }
-  #results, #results * {
-    visibility: visible;
-  }
-  #results {
-    position: absolute;
-    left: 0;
+
+
+/*Set up menu*/
+ul.topnav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    position: fixed;
     top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+}
+
+ul.topnav li {float: left;}
+
+ul.topnav li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+ul.topnav li a:hover:not(.active) {background-color: #111;}
+
+ul.topnav li a.active {background-color: #4CAF50;}
+
+/*Animates the circles individually*/
+#circleHour {
+  fill: rgba(0,0,0,0);
+  stroke: blue;
+  stroke-linecap: round;
+  stroke-width: 10;
+  stroke-dashoffset: 500;
+  animation: rotate 3600s linear infinite;
+}
+#circleMinute {
+  fill: rgba(0,0,0,0);
+  position: absolute;
+  stroke: green;
+  stroke-linecap: round;
+  stroke-width: 10;
+  stroke-dashoffset: 500;
+  animation: rotate 60s linear infinite
+}
+#circleSecond {
+  fill: rgba(0,0,0,0);
+  position: absolute;
+  stroke: red;
+  stroke-linecap: round;
+  stroke-width: 10;
+  stroke-dashoffset: 500;
+  animation: rotate 1s linear infinite;
+}
+
+
+
+/*formats where the circles go on the screen*/
+.svg-container-hour {
+  position: absolute;
+  top: 200px;
+  right: 190px;
+  width: 100%;
+  height: 0px;
+}
+.svg-container-minute {
+  position: absolute;
+  top: 200px;
+  right: 0px;
+  width: 100%;
+  height: 0px;
+}
+.svg-container-second {
+  position: absolute;
+  top: 200px;
+  left: 190px;
+  width: 100%;
+  height: 0px;
+}
+
+
+/*formats the Title*/
+div.title {
+  position: absolute;
+  top: 10px;
+  width: 100%;
+  height: 0px;
+}
+
+
+/*formats how the numbers get put in the circles*/
+div.numbersHours {
+  position: absolute;
+  top: 150px;
+  right: 200px;
+  width: 100%;
+  height: 0px;
+}
+div.numbersMinutes {
+  position: absolute;
+  top: 150px;
+  right: 10px;
+  width: 100%;
+  height: 0px;
+}
+div.numbersSeconds {
+  position: absolute;
+  top: 150px;
+  left: 180px;
+  width: 100%;
+  height: 0px;
+}
+
+
+
+/*formats how the words get put in the circles*/
+div.wordHours {
+  position: absolute;
+  top: 300px;
+  right: 200px;
+  width: 100%;
+  height: 0px;
+}
+
+div.wordMinutes {
+  position: absolute;
+  top: 300px;
+  right: 10px;
+  width: 100%;
+  height: 0px;
+}
+
+div.wordSeconds {
+  position: absolute;
+  top: 300px;
+  left: 180px;
+  width: 100%;
+  height: 0px;
+}
+
+
+
+#parent {
+  width:100%; height:500px; position:absolute; top:0px;
+}
+
+
+
+/*When the screen shrinks the menu expands and the circles go vertical*/
+@media screen and (max-width: 600px){
+    ul.topnav li {float: none;}
+    #parent {width:100%; height:500px; position:absolute; top:150px;}
+    
+    
+    /*Words formatted vertically*/
+    div.wordSeconds {position: absolute; top: 675px; left: 0px; width: 100%; height: 0px;}
+    div.wordMinutes {position: absolute; top: 475px; left: 0px; width: 100%; height: 0px;}
+    div.wordHours {position: absolute; top: 275px; left: 0px; width: 100%; height: 0px;}
+    
+    
+    /*Numbers formatted vertically*/
+    div.numbersSeconds {position: absolute; top: 525px; left: 0px; width: 100%; height: 0px;}
+    div.numbersMinutes {position: absolute; top: 325px; left: 0px; width: 100%; height: 0px;}
+    div.numbersHours {position: absolute; top: 125px; left: 0px; width: 100%; height: 0px;}
+    
+    
+    /*Circles formatted vertically*/
+    .svg-container-second {position: absolute; top: 575px; left: 8px; width: 100%; height: 0px;}
+    .svg-container-minute {position: absolute; top: 375px; left: 8px; width: 100%; height: 0px;}
+    .svg-container-hour {position: absolute; top: 175px; left: 8px; width: 100%; height: 0px;}
+}
+
+
+/*this is the animation for how the clock rotates*/
+@keyframes rotate {
+  from {
+    stroke-dashoffset: 0;
   }
 }
 
-
-input[id*=In] {
-  height:29px;
-  padding:5px 5px 0px 0px;
-  margin-bottom: 10px;
-  text-transform: none;
-  width: 100px;
-  background: rgb(0, 0, 0, 0);
-  color: white;
-  font-size: 20px;
-  border: none;
-  border-bottom: 2px solid white;
-}
-select {
-  height:38px;
-  padding:5px 5px 0px 0px;
-  margin-bottom: 10px;
-  border-radius: 0px;
-  text-transform: none;
-  width: 100px;
-  background: #FFFFFF;
-  color: white;
-  font-size: 20px;
-  border: none;
-  border-bottom: 2px solid white;
-  
-  /* make arrow and background */
-  background:
-    linear-gradient(45deg, transparent 50%, #d3d3d3 50%),
-    linear-gradient(135deg, #d3d3d3 50%, transparent 50%),
-    linear-gradient(to right, transparent, transparent);
-  background-position:
-    calc(100% - 7px) calc(1em - 3px),
-    calc(100%) calc(1em - 3px),
-    100% 0;
-  background-size:
-    7px 7px,
-    7px 7px,
-    2.5em 2.5em;
-  background-repeat: no-repeat;
-  /* reset */
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  -webkit-appearance:none;
-  -moz-appearance:none;
-  
-}
-  
-  
-input[id*=In]:focus{
-  border-bottom: 2px solid black;
-  color: black;
-  outline: none;
-}
-select[id*=In]:focus{
-  border-bottom: 2px solid #000;
-  color: #000;
-  outline: none;
-  
-  
-  background:
-    linear-gradient(45deg, transparent 50%, black 50%),
-    linear-gradient(135deg, black 50%, transparent 50%),
-    linear-gradient(to right, transparent, transparent);
-  background-position:
-    calc(100% - 7px) calc(1em - 3px),
-    calc(100%) calc(1em - 3px),
-    100% 0;
-  background-size:
-    7px 7px,
-    7px 7px,
-    2.5em 2.5em;
-  background-repeat: no-repeat;
-  /* reset */
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  -webkit-appearance:none;
-  -moz-appearance:none;
-  
-}
-   
-   
-abbr {
-  font-size: 20px;
-  font-family: arial;
-  border-radius: 100px;
-  border: 1px solid black;
-  cursor: default;
-  text-decoration: none !important;
-  color: black;
-}
-abbr:hover {
-  border: 1px solid white;
-  text-decoration: none !important;
-  color: white;
-  
-}
-button {
-  
-  width: 80px;
-  height: 40px;
-  font-size: 18px;
-  background: #0080FF;
-  outline-style: none;
-  color: #FFF;
-}
-button:active {
-  background: #6593F5;
-}
-pre {
-  font-family: times new roman;
-  font-size: 20px;
-  color: white;
-}
-div.descriptions {
-  position: absolute;
-  top: 0px;
-  left: -15px;
-  height: 0px;
-}
-div.form {
-  position: absolute;
-  top: 34px;
-  left: 320px;
-  height: 0px;
-}
-div.questions {
-  position: absolute;
-  top: 25px;
-  left: 410px;
-  height: 0px;
-}
-div.button {
-  position: absolute;
-  top: 275px;
-  left: 210px;
-  height: 0px;
-}
-div.error {
-  position: absolute;
-  top: 310px;
-  left: 15px;
-  height: 0px;
-}
-#buttons2 {
-  display: none;
-  margin: 5px auto;
-  
-}
-#inputs {
-  position: relative;
-  margin: 0 auto;
-  top: 0px;
-  left: 0px;
-  width: 500px; 
-  height: 370px;
-  border: 2px solid #d3d3d3;
-  background: rgba(180, 180, 180, 0.5);
-}
-#results {
-  position: relative;
-  margin: 0 auto;
-  top: 0px;
-  left: 0px;
-  width: 80%; 
-  height: 50%;
-  border: 2px solid #d3d3d3;
-  background: rgba(180, 180, 180, 0.5);
-  display: none;
-}
-body {
-    background: url("http://www.whimsandfancies.com/wp-content/gallery/point_reyes/tule_elk_clsup.jpg") no-repeat center fixed; 
-    background-size: cover;
+@keyframes rotate2 {
+  from {
+    stroke-dashoffset: 0;
+  }
 }
 </style>
-  <!--Metadata set up -->
-  <title>Tule Elk Simulation</title>
+  <title>Countdown till school's out</title>
   <meta charset="UTF-8">
 </head>
-<body>
-
 <!--HTML-->
 
 
-<!--Heading-->
-<h1 style="text-align:center;">Tule Elk Simulation</h1>
-<!--instrutions-->
-<p id="directions" style="text-align:center;">Hover over question marks for more information</p><br>
 
-<!--Creates a div that hides when button is pressed-->
-<div id="inputs">
-
-  
-  
-
-  <!--div for the descriptions-->
-  <div class="descriptions">
-    <pre style="text-align:right;"> 
-      Generations to Simulate: <br>
-      Likelihood of Environment Change: <br>
-      Migration Rate: <br>
-      Mutation Rate: <br>
-      Allele to Simulate: <br>
-    </pre>
-  </div>
-  
-  
-  
-  <!--div for the form/inputs-->
-  <div class="form">
-    <form id="frm1" onkeyup="return checkCorrect()">
-    <input type="number" id="genIn" value="100" min="50" max="500" step="10"><br>
-    <input type="number" id="envirIn" value="10" min="1" max="100" step="1"><br>
-    <input type="number" id="migrationIn" value="10" min="0" max="100" step="1"><br>
-    <input type="number" id="mutationIn" value="10" min="0" max="100" step="1"><br>
-    <select id="allelesIn">
-      <option value="BL42">BL42</option>
-      <option value="BM6505">BM6505</option>
-      <option value="RM006">RM006</option>
-      <option value="BM5004">BM5004</option>
-      <option value="BM4107">BM4107</option>
-      <option value="BM888">BM888</option>
-      <option value="BM1009">BM1009</option>
-      <option value="MAF109">MAF109</option>
-      <option value="JP15">JP15</option>
-    </select>
-    </form>
-  </div>
+<!--Menu-->
+<ul class="topnav">
+  <li style="color: white; display: block; text-align: center; padding: 14px 16px;">Countdown until:</li>
+  <li><a class="active" href="file:///Users/declanbrady10619/Desktop/countdown.html">School Day Over</a></li>
+  <li><a href="file:///Users/declanbrady10619/Desktop/Period_countdown.html">Period Over</a></li>
+  <li><a href="#contact">School Year Over</a></li>
+</ul>
 
 
 
-  <!--div for the question marks-->
-  <div class="questions">
-    <pre>
-      <abbr title="How many generations will be simulated"> ? </abbr><br>
-      <abbr title="The percent chance that enviroment will change and make certain alleles more evolutionarily helpful"> ? </abbr><br>
-      <abbr title="How much migration in and out of the herd"> ? </abbr><br>
-      <abbr title="Likelyhood that alleles will mutate"> ? </abbr><br>
-      <abbr title="Which allele will be simulated"> ? </abbr>
-    </pre>
-  </div>
-  
-  
-  <!--Creates a div for the button-->
-  <div class="button">
-    <button onClick="simAllGen()">Submit</button>
-  </div>
-  
-  
-  <!--Creates a div for error message-->
-  <div class="error">
-    <p style="color:white; text-align:center;" id="whichOne"></p>
-  </div>
+<!--Disables horzontal scrolling-->
+<body style="max-width: 100%; overflow-x: hidden;">
+
+
+
+<!--Creates a parent div that can change when screen shrinks-->
+
+
+
+<div id="parent">
+<!--Heading for the title-->
+<div class="title">
+    <h1 style="font-size:60px; text-align: center;">Countdown Clock</h1>
 </div>
 
 
 
-<!--Creates a div of reset button and graph-->
-<div id="results">
-  <canvas id="myChart"></canvas>
-  <pre padding="0px" style="color: black; text-align:center; line-height:.1;">Generation</pre>  
+<!--puts the words inside the circles (formats it)-->
+<div class="wordHours">
+    <h2><pre style="font-family:times-new-roman; text-align:center;">   Hours</pre>
+    </h2>
+</div>
+
+<div class="wordMinutes" top="250">
+    <h2><pre style="font-family:times-new-roman; text-align:center;">   Minutes</pre>
+    </h2>
+</div>
+
+<div class="wordSeconds">
+    <h2><pre style="font-family:times-new-roman; text-align:center;">   Seconds</pre>
+    </h2>
 </div>
 
 
-<div id="buttons2">
-  <pre><button onClick="showInput()">Reset</button> <button onClick="simAllGen()" style="width: 110px;">Run Again</button> <button onClick="window.print()">Print</button></pre>
+
+<!--Puts the numbers inside the circles and assigns the the value given to them by the javascript-->
+<div class="numbersHours">
+    <b><pre style="font-size:80px; font-family:times-new-roman; text-align:center;" id="hours"></pre></b>
+</div>
+
+<div class="numbersMinutes" top="100">
+    <b><pre style="font-size:80px; font-family:times-new-roman; text-align:center;" id="minutes"></pre></b>
+</div>
+
+<div class="numbersSeconds">
+    <b><pre style="font-size:80px; font-family:times-new-roman; text-align:center;" id="seconds"></pre></b>
 </div>
 
 
-<!--cite the picture-->
-<pre style="font-size: 10px;"> *Photo courtesy of Soma Acharya, writer at Whims and Fancies, url:http://www.whimsandfancies.com/winter-warmth/</pre>
+
+
+<!--Circles-->
+<div class="svg-container-hour" style="text-align:center;">
+  <svg height="200" width="200" id="SVGHour" stroke-dasharray="500">
+    <circle id="circleHour" cx="100" cy="100" r="80" transform="rotate(-90, 95, 95)"/>
+  </svg>
+</div>
 
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<div class="svg-container-minute" style="text-align:center;">
+  <svg height="200" width="200" id="SVGMinute" stroke-dasharray="500">
+    <circle id="circleMinute" cx="100" cy="100" r="80" transform="rotate(-90, 95, 95)"/>
+  </svg>
+</div>
 
 
 
+<div class="svg-container-second" style="text-align:center;">
+  <svg height="200" width="200" id="SVGSecond" stroke-dasharray="500">
+    <circle id="circleSecond" cx="100" cy="100" r="80" transform="rotate(-90, 95, 95)"/>
+  </svg>
+</div>
+</div>
 
+
+<!--Text for if there is school that day (outside of parent so it is shown when everything else isn't-->
+<div style="position: absolute; top: 140px; width: 100%; height: 0px;">
+  <b><pre style="font-size:60px; font-family:times-new-roman; text-align:center;" id="status"></pre></b>
+</div>
+
+
+
+<!--script-->
 <script>
-//creates all values of alleles as dictionaries
-var BL42 = {};
-var BM6505 = {};
-var RM006 = {};
-var BM5004 = {};
-var BM4017 = {};
-var BM888 = {};
-var BM1009 = {};
-var MAF109 = {};
-var JP15 = {};
-//creates an array of all dictionaries
-var alleles = [];
-var pop;
-var popPoints = [];
-//input variable
-var gens;
-var envirChange;
-var migration;
-var mutation;
-var allele;
-var alleleToSim;
-//fitness of the alleles
-var fit1;
-var fit2;
-var fit3;
-var popAA;
-var popAa;
-var popaa;
-var popAAOriginal;
-var popAaOriginal;
-var popaaOriginal;
-var AACap;
-var AaCap;
-var aaCap;
-function assignVars() {
-//creates all values of alleles as dictionaries
-  BL42 = {name: "BL42", numAlleles: 2, alleleA: 0.076, alleleB: 0.924};
-  BM6505 = {name: "BM6505", numAlleles: 1, alleleA: 1};
-  RM006 = {name: "RM006", numAlleles: 1, alleleA: 1};
-  BM5004 = {name: "BM5004", numAlleles: 2, alleleA: 0.226, alleleB: 0.774};
-  BM4017 = {name: "BM4017", numAlleles: 1, alleleA: 1};
-  BM888 = {name: "BM888", numAlleles: 2, alleleA: 0.694, alleleB: 0.306};
-  BM1009 = {name: "BM1009", numAlleles: 1, alleleA: 1};
-  MAF109 = {name: "MAF109", numAlleles: 2, alleleA: 0.267, alleleB: 0.733};
-  JP15 = {name: "JP15", numAlleles: 1, alleleA: 1};
-//creates an array of all dictionaries
-  alleles = [BL42, BM6505, RM006, BM5004, BM4017, BM888, BM1009, MAF109, JP15];
-  pop = 440;
-  popPoints = [440];
-//input variable
-  gens = document.getElementById("genIn").value;
-  envirChange = document.getElementById("envirIn").value;;
-  migration = document.getElementById("migrationIn").value;;
-  mutation = document.getElementById("mutationIn").value;;
-  allele = document.getElementById("allelesIn").value;;
-  alleleToSim = findAllele();
-//fitness of the alleles
-  fit1 = 1;
-  fit2 = 1;
-  fit3 = 1;
-  popAA = 0;
-  popAa = 0;
-  popaa = 0;
-  popAAOriginal = 0;
-  popAaOriginal = 0;
-  popaaOriginal = 0;
-  AACap;
-  AaCap;
-  aaCap;
-}
+//runs methods
+updateClock();
+updateCircles();
 
 
 
 
-//create a graph
-function createGraph() {
-  Chart.defaults.global.defaultFontColor = "black";
-  var xAxis = document.getElementById("genIn").value;
-  var xPoints = [];
-  var yPoints = [];
-  for(var i = 0; i < popPoints.length; i+=xAxis/20) {
-    yPoints.push(popPoints[i]);
-  }
-  for(var i = 0; i <= xAxis; i+=xAxis/20) {
-    xPoints.push(i);
-  }
-  var ctx = document.getElementById('myChart').getContext('2d');
-  var chart = new Chart(ctx, {
-      type: 'line',
-    
-      axisX:{
-        interval: 50,
-      },
-    
-      // The data for our dataset
-      data: {
-          labels: xPoints,
-          datasets: [{
-              label: "Population",
-              backgroundColor: 'rgba(255, 99, 132, 0)',
-              borderColor: 'rgb(255, 99, 0)',
-              data: yPoints,
-          }]
-      },
+//updates the time left in school, refreshes every 10 milliseconds
+function updateClock() {
 
-      // Configuration options go here
-      options: {
-        
-        elements: {
-          line: {
-              tension: 0, // disables bezier curves
-          }
-        }
-      }
-  });
-}
+
+//finds the current time
+var d = new Date();
+var month = d.getMonth() + 1;
+var year = d.getFullYear();
+var date = d.getDate();
+var DOW = d.getDay();
+var hour = d.getHours();
+var minute = d.getMinutes();
+var second = d.getSeconds();
+var millisecond = d.getMilliseconds();
 
 
 
-function simAllGen() {
-  if(canSubmit) {
-    hideInput();
-    assignVars();
-    for(var i = 0; i < gens; i++) {
-      changeFit();
-      createIndividuals();
-      calcOffspring();
-      calcPop();
-    }
-    createGraph();
-  } else {
-    if(theFalse == 0) {
-      name = "Generations to Simulate";
-    } else if(theFalse == 1) {
-      name = "Likelihood of Environment Change";
-    } else if(theFalse == 2) {
-      name = "Migration Rate";
-    } else if(theFalse == 3) {
-      name = "Mutation Rate";
-    }
-    document.getElementById("whichOne").innerHTML = "**The value in " + name + " is outside the required range. Please enter a number between " + idMins[theFalse] + " and " + idMaxes[theFalse] + ".";
-  }
+//time left in school
+var total = 15*3600 + 5*60 + 4;
+var totalLeft = total - (hour*3600 + minute*60 + second);
+hoursLeft = (totalLeft / 3600) | 0;
+minutesLeft = ((totalLeft % 3600)/60) | 0;
+secondsLeft = ((totalLeft % 3600)%60) | 0;
+
+
+//what to print
+if(DOW === 0 || DOW == 6) {
+var toPrint = "It’s a weekend, no school!";
+document.getElementById("status").innerHTML = toPrint;
+disappear();
 }
-//calculates the total pop for each allele based on fitness
-function calcPop() {
-  //calculates the new pops based on fitness
-  
-  popAA = Math.max(0, Math.floor((popAA * fit1)-popAAOriginal));
-  popAa = Math.max(0, Math.floor((popAa * fit1)-popAaOriginal));
-  popaa = Math.max(0, Math.floor((popaa * fit2)-popaaOriginal));
-  
-  //creates a cap on the population (equilibirum)
-  if(pop > 0) {
-    AACap = Math.floor(600*(popAA/pop));
-    AaCap = Math.floor(600*(popAa/pop));
-    aaCap = Math.floor(600*(popaa/pop));
-  } else {
-    AACap = 0;
-    AaCap = 0;
-    aaCap = 0;
-  }
-  
-  
-  
-  //creates new pops based on the cap
-  popAA = Math.min(AACap, popAA);
-  popAa = Math.min(AaCap, popAa);
-  popaa = Math.min(aaCap, popaa);
-  
-  
-  
-  
-  //calculates total pop
-  pop = (popAA + popAa + popaa);
-  popPoints.push(pop);
-  
-  
-  
-  //calculates the new frequencies
-  if(pop > 0) {
-    alleleToSim.alleleA = ((popAA *2.0) + popAa) / (pop*2);
-	alleleToSim.alleleB = 1 - alleleToSim.alleleA;
-  } else {
-    alleleToSim.alleleA = 0;
-    alleleToSim.alleleB = 0;
-  }
+else {
+if((hour == 15 && minute >= 5 && second >= 5) || (hour == 15 && minute >= 6) || hour >= 16) {
+var toPrint = "School is out for today!";
+document.getElementById("status").innerHTML = toPrint;
+disappear();
 }
-//does hardey-wineberg to calculate new population numbers
-function calcOffspring() {
-  //assumes 80% of the generation mates and each pair makes 3 children
-  var popAAMates = Math.floor((popAA*2.4) - (popAA*2.4)%2);
-  var popAaMates = Math.floor((popAa*2.4) - (popAa*2.4)%2);
-  var popaaMates = Math.floor((popaa*2.4) - (popaa*2.4)%2);
-  for(var i = 0; i < (pop*1.2 - ((pop*1.2)%2) - 3); i++) { //make sure there are an even number of mates
-  
-    //assigns the two mates to an allele type
-    var mate1 = Math.floor(Math.random()*3);
-    var mate2 = Math.floor(Math.random()*3);
-    while((mate1 === 0 && popAAMates <= 0) || (mate1 == 1 && popAaMates <= 0) || (mate1 == 2 && popaaMates <= 0)) {
-      mate1 = Math.floor(Math.random()*3);
-    }
-    if(mate1 === 0) {
-      popAAMates--;
-    } else if (mate1 == 1) {
-      popAaMates--;
-    } else {
-      popaaMates--;
-    }
-    while((mate2 === 0 && popAAMates <= 0) || (mate2 == 1 && popAaMates <= 0) || (mate2 == 2 && popaaMates <= 0)) {
-      mate2 = Math.floor(Math.random()*3);
-    }
-    if(mate2 === 0) {
-      popAAMates--;
-    } else if (mate2 == 1) {
-      popAaMates--;
-    } else {
-      popaaMates--;
-    }
-    
-    
-    
-    //calculate allele type
-    if(mate1 === 0 && mate2 === 0) {
-      popAA++;
-    }
-    if((mate1 === 0 && mate2 == 1) || (mate1 == 1 && mate2 === 0)) {
-      var which = Math.round(Math.random()*4);
-      if(which <=2) {
-        popAA++;
-      } else {
-        popAa++;
-      }
-    }
-    if((mate1 === 0 && mate2 == 2) || (mate1 == 2 && mate2 === 0)) {
-      popAa++;
-    }
-    if(mate1 == 1 && mate2 == 1) {
-      var which = Math.round(Math.random()*4);
-      if(which===0) {
-        popAA++;
-      } else if(which==3) {
-        popaa++;
-      } else {
-        popAa++;
-      }
-    }
-    if((mate1 == 1 && mate2 == 2) || (mate1 == 2 && mate2 == 1)) {
-      var which = Math.round(Math.random()*2);
-      if(which===0) {
-        popAa++;
-      } else {
-        popaa++;
-      }
-    }
-    if(mate1 == 2 && mate2 == 2) {
-      popaa++;
-    }
-  }
+else {
+appear();
+var toPrintHours = String(" " + hoursLeft);
+var toPrintMinutes = String(" " + minutesLeft);
+var toPrintSeconds = String(" " + secondsLeft);
+document.getElementById("hours").innerHTML = toPrintHours;
+document.getElementById("minutes").innerHTML = toPrintMinutes;
+document.getElementById("seconds").innerHTML = toPrintSeconds;
 }
-//changes the fitness of genes based on random environmental changes
-function changeFit() {
-  if(envirChange/100 > Math.random()) {
-    var which = Math.floor(Math.random()*2);
-    var up = Math.floor(Math.random()*2);
-    if(which === 0) {
-      if(up === 0) {
-        fit1 = Math.max(0, fit1 - (Math.random()/5));
-      } else {
-        fit1 = Math.min(1, fit1 + (Math.random()/5));
-      }
-    } else {
-      if(up === 0) {
-        fit2 = Math.max(0, fit2 - (Math.random()/5));
-      } else {
-        fit2 = Math.min(1, fit2 + (Math.random()/5));
-      }
-    }
-  }
 }
-//finds which gene the user wants to simulate
-function findAllele() {
-  for(var i = 0; i < alleles.length; i++) {
-    if(alleles[i].name == allele) {
-      if(alleles[i].name == "BM6505" || alleles[i].name == "JP15" || alleles[i].name == "BM1009" || alleles[i].name == "BM4017" || alleles[i].name == "RM006") {
-        migration = 0;
-      }
-      return(alleles[i]);
-    }
-  }
+
+//prints it and updates it
+setTimeout(updateClock, 10);
+
 }
-//creates and array of individuals
-function createIndividuals() {
-  var p = alleleToSim.alleleA;
-  var q;
-  if(alleleToSim.numAlleles > 1) {
-    q = alleleToSim.alleleB;
-  } else {
-    q = 0;
-  }
-  //migraition
-  p = p * (1.0 - (migration/100)) + (migration/100);
-  
-  
-  
-  //mutation rate
-  if(alleleToSim.numAlleles > 1) {
-    p = (1 - (mutation/100)) * p + (mutation/100) * (1 - p);
-  }
-  
-  
-  //assigns the number of pops for each allele
-  popAA = Math.round((p * p) * pop); //get number of AA
-  popAa = Math.round((2.0 * p * q) * pop); //get number of Aa
-  popaa = Math.round((q * q) * pop); //get number of aa
-  
-  
-  //assings the same value as above but for later use
-  popAAOriginal = popAA;
-  popAaOriginal = popAa;
-  popaaOriginal = popaa;
-  
-  
-  //gives population size
-  pop = popAA + popAa + popaa;
+
+
+
+function updateCircles() {
+var d = new Date();
+
+
+//current time
+var month = d.getMonth() + 1;
+var year = d.getFullYear();
+var date = d.getDate();
+var DOW = d.getDay();
+var hour = d.getHours();
+var minute = d.getMinutes();
+var second = d.getSeconds();
+var millisecond = d.getMilliseconds();
+
+
+
+//time left in school
+var total = 15*3600 + 5*60 + 4;
+var totalLeft = total - (hour*3600 + minute*60 + second);
+var millisecondsLeft = 999 - millisecond;
+hoursLeft = (totalLeft / 3600) | 0;
+minutesLeft = ((totalLeft % 3600)/60) | 0;
+secondsLeft = ((totalLeft % 3600)%60) | 0;
+
+
+
+//updatesCircle
+//how fast it will turn
+var secondTime = String(millisecondsLeft/1000 + "s");
+var minuteTime = String(secondsLeft + 1 + "s");
+var hourTime = String(minutesLeft*60 + secondsLeft + "s");
+
+//changes it to the above speeds and shortens the stroke
+document.getElementById("circleSecond").style.animation = "rotate " + secondTime + " linear 1";
+
+document.getElementById("circleMinute").style.animation = "rotate " + minuteTime + " linear 1";
+
+document.getElementById("circleHour").style.animation = "rotate " + hourTime + " linear 1";
+
+
+//resets the circles after they close
+setTimeout(normalizeSecond, millisecondsLeft);
+setTimeout(normalizeMinute, secondsLeft*1000 + millisecondsLeft);
+setTimeout(normalizeHour, minutesLeft*60000 + secondsLeft*1000 + millisecondsLeft);
 }
-//at first, we define a variable stating that an event listener has been attached onto the field
-var validate = false;
-//id names
-var ids = ["genIn", "envirIn", "migrationIn", "mutationIn"];
-//id mins and maxes
-var idMins = [50, 1, 0, 0];
-var idMaxes = [500, 100, 100, 100];
-var canSubmit = true;
-var count = 0;
-var textInBox;
-var value;
-var name;
-var theFalse;
-function checkCorrect() {
-  for(var i = 0; i < ids.length; i++) {
-    textInBox = document.forms["frm1"][ids[i]].value;
-    value = textInBox.replace(/[^\d]/g, '');
-    if(value <= idMaxes[i] && value >= idMins[i]) {
-      count++;
-      document.getElementById(ids[i]).style.borderBottom=null;
-      document.getElementById(ids[i]).style.color=null;
-      document.getElementById("whichOne").innerHTML = "";
-    } 
-    else {
-      theFalse = i;
-      count = 0;
-      document.getElementById(ids[i]).style.borderBottom="2px solid red";
-      document.getElementById(ids[i]).style.color="red";
-    }
-  }
-  if(count == 4) {
-    canSubmit=true;
-    count = 0;
-  } else {
-    canSubmit=false;
-    count = 0;
-  }
+
+function normalizeSecond() {
+    document.getElementById("circleSecond").style.animation = "rotate2 1s linear infinite";
 }
-//hides and show results/inputs
-function hideInput() {
-  document.getElementById("inputs").style.display = "none";
-  document.getElementById("results").style.display = "block";
-  document.getElementById("buttons2").style.display = "table";
-  document.getElementById("directions").style.display = "none";
+
+function normalizeMinute() {
+    document.getElementById("circleMinute").style.animation = "rotate2 60s linear infinite";
 }
-function showInput() {
-  document.getElementById("inputs").style.display = "block";
-  document.getElementById("results").style.display = "none";
-  document.getElementById("buttons2").style.display = "none";
-  document.getElementById("directions").style.display = "block";
+
+function normalizeHour() {
+    document.getElementById("circleHour").style.animation = "rotate2 3600s linear infinite";
 }
+
+
+//shows and hides the UI
+function disappear() {
+  var x = document.getElementById("parent");
+      x.style.display = "none";
+}
+
+function appear() {
+  var x = document.getElementById("parent");
+      x.style.display = "block";
+}
+
 </script>
+
 </body>
+</html>
