@@ -236,20 +236,17 @@ body {
     <form id="frm1" onkeyup="return checkCorrect()">
     <input type="number" id="genIn" value="100" min="50" max="500" step="10"><br>
     <input type="number" id="envirIn" value="10" min="1" max="100" step="1"><br>
-    <input type="number" id="migrationIn" value="0" min="0" max="10" step="1"><br>
-    <input type="number" id="mutationIn" value="0" min="0" max="10" step="1"><br>
+    <input type="number" id="migrationIn" value="10" min="0" max="100" step="1"><br>
+    <input type="number" id="mutationIn" value="10" min="0" max="100" step="1"><br>
     <select id="allelesIn">
       <option value="BL42">BL42</option>
       <option value="BM6505">BM6505</option>
-      <option value="BM415">BM415</option>
       <option value="RM006">RM006</option>
       <option value="BM5004">BM5004</option>
       <option value="BM4107">BM4107</option>
-      <option value="FCB193">FCB193</option>
       <option value="BM888">BM888</option>
       <option value="BM1009">BM1009</option>
       <option value="MAF109">MAF109</option>
-      <option value="BOVIRBP">BOVIRBP</option>
       <option value="JP15">JP15</option>
     </select>
     </form>
@@ -339,14 +336,14 @@ var AaCap;
 var aaCap;
 function assignVars() {
 //creates all values of alleles as dictionaries
-  BL42 = {name: "BL42", numAlleles: 2, alleleA: 1, alleleB: 2};
+  BL42 = {name: "BL42", numAlleles: 2, alleleA: 0.076, alleleB: 0.924};
   BM6505 = {name: "BM6505", numAlleles: 1, alleleA: 1};
   RM006 = {name: "RM006", numAlleles: 1, alleleA: 1};
-  BM5004 = {name: "BM5004", numAlleles: 2, alleleA: 1, alleleB: 2};
+  BM5004 = {name: "BM5004", numAlleles: 2, alleleA: 0.226, alleleB: 0.774};
   BM4017 = {name: "BM4017", numAlleles: 1, alleleA: 1};
   BM888 = {name: "BM888", numAlleles: 2, alleleA: 0.694, alleleB: 0.306};
   BM1009 = {name: "BM1009", numAlleles: 1, alleleA: 1};
-  MAF109 = {name: "MAF109", numAlleles: 2, alleleA: 1, alleleB: 2};
+  MAF109 = {name: "MAF109", numAlleles: 2, alleleA: 0.267, alleleB: 0.733};
   JP15 = {name: "JP15", numAlleles: 1, alleleA: 1};
 //creates an array of all dictionaries
   alleles = [BL42, BM6505, RM006, BM5004, BM4017, BM888, BM1009, MAF109, JP15];
@@ -634,7 +631,7 @@ var validate = false;
 var ids = ["genIn", "envirIn", "migrationIn", "mutationIn"];
 //id mins and maxes
 var idMins = [50, 1, 0, 0];
-var idMaxes = [500, 100, 10, 10];
+var idMaxes = [500, 100, 100, 100];
 var canSubmit = true;
 var count = 0;
 var textInBox;
