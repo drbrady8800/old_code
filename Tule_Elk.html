@@ -168,7 +168,7 @@ div.error {
   height: 0px;
 }
 #buttons2 {
-  display: table;
+  display: none;
   margin: 5px auto;
   
 }
@@ -210,7 +210,7 @@ body {
 <!--Heading-->
 <h1 style="text-align:center;">Tule Elk Simulation</h1>
 <!--instrutions-->
-<p style="text-align:center;">Hover over question marks for more information</p><br>
+<p id="directions" style="text-align:center;">Hover over question marks for more information</p><br>
 
 <!--Creates a div that hides when button is pressed-->
 <div id="inputs">
@@ -289,8 +289,11 @@ body {
 
 <div id="buttons2">
   <pre><button onClick="showInput()">Reset</button> <button onClick="simAllGen()" style="width: 110px;">Run Again</button> <button onClick="window.print()">Print</button></pre>
-  </div>
+</div>
 
+
+<!--cite the picture-->
+<pre style="font-size: 10px;"> *Photo courtesy of Soma Acharya, writer at Whims and Fancies, url:http://www.whimsandfancies.com/winter-warmth/</pre>
 
 
 
@@ -668,11 +671,13 @@ function hideInput() {
   document.getElementById("inputs").style.display = "none";
   document.getElementById("results").style.display = "block";
   document.getElementById("buttons2").style.display = "table";
+  document.getElementById("directions").style.display = "none";
 }
 function showInput() {
   document.getElementById("inputs").style.display = "block";
   document.getElementById("results").style.display = "none";
   document.getElementById("buttons2").style.display = "none";
+  document.getElementById("directions").style.display = "block";
 }
 </script>
 </body>
