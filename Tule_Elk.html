@@ -402,10 +402,10 @@ function createGraph() {
   var xAxis = document.getElementById("genIn").value;
   var xPoints = [];
   var yPoints = [];
-  for(var i = 0; i < popPoints.length; i+=Math.floor(xAxis/20)) {
+  for(var i = 0; i < popPoints.length; i+=Math.round(xAxis/20)) {
     yPoints.push(popPoints[i]);
   }
-  for(var i = 0; i <= xAxis; i+=Math.floor(xAxis/20)) {
+  for(var i = 0; i <= xAxis; i+=Math.round(xAxis/20)) {
     xPoints.push(i);
   }
   ctx = document.getElementById('myChart').getContext('2d');
