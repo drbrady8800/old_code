@@ -303,7 +303,7 @@ body {
 
 
 <div id="buttons2">
-  <pre><button onClick="showInput()">Reset</button> <button onClick="simAllGen()" style="width: 110px;">Run Again</button> <button onClick="window.print()">Print</button></pre>
+  <pre><button onClick="showInput()">Reset</button> <button onClick="runAgain()" style="width: 110px;">Run Again</button> <button onClick="window.print()">Print</button></pre>
 </div>
 
 
@@ -352,6 +352,10 @@ var popaaOriginal;
 var AACap;
 var AaCap;
 var aaCap;
+
+//chart vars
+var ctx;
+var chart;
 function assignVars() {
 //creates all values of alleles as dictionaries
   BL42 = {name: "BL42", numAlleles: 2, alleleA: 0.076, alleleB: 0.924};
@@ -404,8 +408,8 @@ function createGraph() {
   for(var i = 0; i <= xAxis; i+=Math.floor(xAxis/20)) {
     xPoints.push(i);
   }
-  var ctx = document.getElementById('myChart').getContext('2d');
-  var chart = new Chart(ctx, {
+  ctx = document.getElementById('myChart').getContext('2d');
+  chart = new Chart(ctx, {
       type: 'line',
       
       axisX: {
@@ -433,6 +437,17 @@ function createGraph() {
         }
       }
   });
+}
+
+//destroys the canvas so that it doesn't move
+function removeGraph(){
+  chart.destroy();
+};
+
+
+function runAgain() {
+  removeGraph();
+  simAllGen();
 }
 
 
@@ -505,6 +520,8 @@ function calcPop() {
     alleleToSim.alleleB = 0;
   }
 }
+
+
 //does hardey-wineberg to calculate new population numbers
 function calcOffspring() {
   //assumes 80% of the generation mates and each pair makes 3 children
