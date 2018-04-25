@@ -476,6 +476,26 @@ function simAllGen() {
     document.getElementById("whichOne").innerHTML = "**The value in " + name + " is outside the required range. Please enter a number between " + idMins[theFalse] + " and " + idMaxes[theFalse] + ".";
   }
 }
+//changes the fitness of genes based on random environmental changes
+function changeFit() {
+  if(envirChange/100 > Math.random()) {
+    var which = Math.floor(Math.random()*2);
+    var up = Math.floor(Math.random()*2);
+    if(which === 0) {
+      if(up === 0) {
+        fit1 = Math.max(0, fit1 - (Math.random()/5));
+      } else {
+        fit1 = Math.min(1, fit1 + (Math.random()/5));
+      }
+    } else {
+      if(up === 0) {
+        fit2 = Math.max(0, fit2 - (Math.random()/5));
+      } else {
+        fit2 = Math.min(1, fit2 + (Math.random()/5));
+      }
+    }
+  }
+}
 //calculates the total pop for each allele based on fitness
 function calcPop() {
   //calculates the new pops based on fitness
@@ -590,26 +610,7 @@ function calcOffspring() {
     }
   }
 }
-//changes the fitness of genes based on random environmental changes
-function changeFit() {
-  if(envirChange/100 > Math.random()) {
-    var which = Math.floor(Math.random()*2);
-    var up = Math.floor(Math.random()*2);
-    if(which === 0) {
-      if(up === 0) {
-        fit1 = Math.max(0, fit1 - (Math.random()/5));
-      } else {
-        fit1 = Math.min(1, fit1 + (Math.random()/5));
-      }
-    } else {
-      if(up === 0) {
-        fit2 = Math.max(0, fit2 - (Math.random()/5));
-      } else {
-        fit2 = Math.min(1, fit2 + (Math.random()/5));
-      }
-    }
-  }
-}
+
 //finds which gene the user wants to simulate
 function findAllele() {
   for(var i = 0; i < alleles.length; i++) {
