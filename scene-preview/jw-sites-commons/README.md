@@ -32,7 +32,7 @@ Reference all the global styles in your main.less file:
 
 
 ### Including HTML Content
-You can refer to the HTML templates for the components with, where "template" is the filename of the template you want to pull in.
+You can refer to the HTML templates for the components with `{% include template.html %}`, where "template" is the filename of the template you want to pull in.
 
 
 ### Updating Grunt

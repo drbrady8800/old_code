@@ -9,6 +9,8 @@
   <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
+  {% include site-header.html %}
+  {% include site-secondary-header.html product="player" %}
   <div class="product-hero">
     <div class="product-hero-container">
       <h1>JW Sites Commons Demo</h1>
@@ -23,6 +25,7 @@
       </ul>
     </div>
   </div>
+  {% include site-footer.html selected="developer" %}
   <script src="main.min.js"></script>
 </body>
 </html>

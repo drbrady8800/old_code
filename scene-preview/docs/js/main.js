@@ -16,7 +16,7 @@ function createPlaylist() {
     var scaleFactor = getScaleFactor();
     var playlistContainer = document.getElementById("playlistContainer");
     if (scaleFactor != 1) {
-        playlistContainer.style.height = (90 * scaleFactor + 100)*4+ "px";
+        playlistContainer.style.height = (90 * scaleFactor + 150)*4+ "px";
     }
     var playlist = playerInstance.getPlaylist();
 
@@ -33,14 +33,14 @@ function createPlaylist() {
         for (var i = 0; i < thumbnailContainers.length; i++) {
             thumbnailContainers[i].style.height = 90 * scaleFactor + "px";
             if (scaleFactor != 1) {
-                playlistItemContainers[i].style.height = (90 * scaleFactor + 100) + "px";
+                playlistItemContainers[i].style.height = (90 * scaleFactor + 150) + "px";
             } else {
                 playlistItemContainers[i].style.height = "130px"
             }
         }
         var playlistContainer = document.getElementById("playlistContainer");
         if (scaleFactor != 1) {
-            playlistContainer.style.height = (90 * scaleFactor + 100)*4+ "px";
+            playlistContainer.style.height = (90 * scaleFactor + 150)*4 + "px";
         } else {
             playlistContainer.style.height = "150px"
         }
@@ -54,7 +54,7 @@ function createPlaylist() {
         playlistItem.id = "playlistItemContainer" + i.toString();
         playlistItem.classList.add("playlistItemContainer");
         if (scaleFactor != 1) {
-            playlistItem.style.height = (90 * scaleFactor + 100) + "px";
+            playlistItem.style.height = (90 * scaleFactor + 150) + "px";
         }
         playlistContainer.appendChild(playlistItem);
 
